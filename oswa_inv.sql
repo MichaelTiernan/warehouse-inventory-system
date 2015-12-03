@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
   `quantity` int(11) unsigned DEFAULT NULL,
-  `ks_storage` int(11) DEFAULT NULL,
+  `ks_storage` int(11) unsigned DEFAULT NULL,
   `tradein` int(11) DEFAULT NULL,
   `buy_price` decimal(25,2),
   `sale_price` decimal(25,2) NOT NULL,
@@ -71,7 +71,7 @@ INSERT INTO `products` (`id`, `name`, `quantity`, `ks_storage`, `buy_price`, `sa
 (8, 'FMG-Fibermodem', 100, 15, '599.00', '999.00', 3, 8, 0, 'Customer', '2015-11-23 10:04:41'),
 (9, 'Cisco SG-300', 100, 15, '599.00', '999.00', 4, 9, 1, 'Customer', '2015-11-23 10:04:41'),
 (10, 'Tafjord Wifi Pluss', 10, 990, '990.00', '1490.00', 3, 10, 0, 'DIV-1113', '2015-11-24 12:59:02'),
-(11, 'ZyXEL P2812', 100, 599, NULL, '599.00', '990.00', 3, 11, 0, 'BB101', '2015-12-01 12:05:18');
+(11, 'ZyXEL P2812', 100, 599, '599.00', '990.00', 3, 11, 0, 'BB101', '2015-12-01 12:05:18');
 
 
 -- Table structure for table `sales`
@@ -181,7 +181,8 @@ ALTER TABLE `trade`
 
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_level` (`user_level`);
+  ADD KEY `user_level` (`user_level`),
+  ADD UNIQUE KEY (`username`);
 
 
 -- Indexes for table `user_groups`

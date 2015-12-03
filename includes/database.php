@@ -48,11 +48,11 @@ class MySqli_DB
         if (trim($sql != "")) {
             $this->query_id = $this->con->query($sql);
         }
-        if (!$this->query_id)
+//        if (!$this->query_id)
             // only for Develope mode
-            die("Error on this Query :<pre> " . $sql . "</pre>");
+//            die("Error on this Query :<pre> " . $sql . "</pre>");
         // For production mode
-        //  die("Error on Query");
+//          die("Error on Query");
 
         return $this->query_id;
 
