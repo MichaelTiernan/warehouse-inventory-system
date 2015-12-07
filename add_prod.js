@@ -4,7 +4,7 @@ $(document).ready(function () {
         var value = $(this).attr("name");
         var go = true;
         $("#result input").each(function () {
-            if ($(this).attr('name') === 's_id' && $(this).val() === value) {
+            if ($(this).attr('name') === 's_id[]' && $(this).val() === value) {
                 go = false;
             }
         });

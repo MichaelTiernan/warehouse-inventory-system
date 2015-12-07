@@ -19,16 +19,9 @@ $dbupdate = false;
 
 
 if (isset($_POST['storage'])) {
-    for ($i = 1; $i < $prod_id[0]['MAX(id)']; $i++) {
+    for ($i = 1; $i <= $prod_id[0]['MAX(id)']; $i++) {
         $I_hovedlager = $_POST["hovedlager-$i"];
         $I_kslager = $_POST["ks-lager-$i"];
-
-        $oldHoved = $storageStatus[$i]['quantity'];
-        $oldKS = $storageStatus[$i]['ks_storage'];
-
-        $hovedDiff = $I_hovedlager - $oldHoved;
-
-        $hoved = $I_hovedlager - $hovedDiff;
 
         //TODO legge inn if som sjekker om verdier har vært forandret og fiks quantity
         //TODO Quantity fikses med å hente gammel verdi for kslageret og ta quantity minus den.

@@ -184,7 +184,6 @@ ALTER TABLE `users`
   ADD KEY `user_level` (`user_level`),
   ADD UNIQUE KEY (`username`);
 
-
 -- Indexes for table `user_groups`
 
 ALTER TABLE `user_groups`

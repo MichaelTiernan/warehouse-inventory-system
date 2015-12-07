@@ -3,9 +3,7 @@ require_once('includes/load.php');
 if (!$session->isUserLoggedIn(true)) {
     redirect('index.php', false);
 }
-?>
 
-<?php
 // Auto suggestion
 $html = '';
 //if (isset($_POST['product_name']) && strlen($_POST['product_name'])) {
@@ -26,8 +24,7 @@ $html = '';
 //
 //    echo json_encode($html);
 //}
-?>
-<?php
+
 // find all product
 
 if (isset($_POST['p_name']) && strlen($_POST['p_name'])) {
@@ -58,4 +55,3 @@ if (isset($_POST['p_name']) && strlen($_POST['p_name'])) {
 
      echo($html);
 }
-?>

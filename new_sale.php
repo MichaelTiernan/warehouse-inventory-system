@@ -46,18 +46,20 @@ if (isset($_POST['custnr'])) {
             $sql .= "'{$p_id}', '{$s_qty}', '{$s_total}', '{$s_date}', '{$custnr}', '{$comment}','$s_userID'";
             $sql .= ")";
 
-            if ($db->query($sql)) {
-                update_product_qty($s_qty, $p_id);
-                $session->msg('s', "Sale added. ");
-//            redirect('add_sale.php', false);
-            } else {
-                $session->msg('d', ' Sorry failed to add!');
-//            redirect('add_sale.php', false);
+            if ($s_qty > 0) {
+                if ($db->query($sql)) {
+                    update_product_qty($s_qty, $p_id);
+//                    $session->msg('s', "Sale added. ");
+                } else {
+//                    $session->msg('d', ' Sorry failed to add!');
+                }
             }
         }
+        header('Location: www.google.com');
+        exit();
     } else {
         $session->msg("d", $errors);
-        redirect('new_sale.php', false);
+//        redirect('new_sale.php', false);
     }
 }
 
@@ -86,24 +88,27 @@ if (isset($_POST['custnr'])) {
                                 <span class="input-group-addon">
                                       <i class="glyphicon glyphicon-info-sign"></i>
                                  </span>
-                                <input class="form-control" type="number" min="0" max="10000000" size="8" name="custnr" placeholder="Kundenummer" autocomplete="on" required>
+                                <input class="form-control" type="number" min="0" max="10000000" size="8" name="custnr" placeholder="Kundenummer" autocomplete="on" style="min-width: 350px" required>
                             </div>
                         </div>
 
                         <div class="input-group">
                             <input type="hidden" class="form-control datePicker" name="date" data-date data-date-format="yyyy-mm-dd" required placeholder="Dato">
                         </div>
+                    </div>
 
-
+                    <div class="row" style="margin-top: 10px">
                         <div class="col-md-2">
                             <div class="input-group">
                                 <span class="input-group-addon">
                                       <i class="glyphicon glyphicon-info-sign"></i>
                                  </span>
-                                <textarea rows="1" class="form-control" type="text" name="comment" placeholder="Kommentar"></textarea>
+                                <textarea rows="1" class="form-control" type="text" name="comment" placeholder="Kommentar" style="min-width: 350px"></textarea>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
                 <table class="table table-bordered">
                     <thead>

@@ -86,21 +86,22 @@ if (isset($_POST['custnr'])) {
                                 <span class="input-group-addon">
                                       <i class="glyphicon glyphicon-info-sign"></i>
                                  </span>
-                                <input class="form-control" type="number" min="0" max="10000000" size="8" name="custnr" placeholder="Kundenummer" autocomplete="on">
+                                <input class="form-control" type="number" min="0" max="10000000" size="8" name="custnr" placeholder="Kundenummer" autocomplete="on" style="min-width: 350px">
                             </div>
                         </div>
 
                         <div class="input-group">
                             <input type="hidden" class="form-control datePicker" name="date" data-date data-date-format="yyyy-mm-dd" required placeholder="Dato">
                         </div>
+                    </div>
 
-
+                    <div class="row" style="margin-top: 10px">
                         <div class="col-md-2">
                             <div class="input-group">
                                 <span class="input-group-addon">
                                       <i class="glyphicon glyphicon-info-sign"></i>
                                  </span>
-                                <textarea rows="1" class="form-control" type="text" name="comment" placeholder="Kommentar" required></textarea>
+                                <textarea rows="1" class="form-control" type="text" name="comment" placeholder="Kommentar" style="min-width: 350px" required></textarea>
                             </div>
                         </div>
                     </div>
