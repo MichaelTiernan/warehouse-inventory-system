@@ -59,28 +59,19 @@
         </div>
     </header>
     <div class="sidebar">
-        <?php if ($user['user_level'] === '1'): ?>
-            <!-- admin menu -->
-            <?php include_once('admin_menu.php'); ?>
-
-        <?php elseif ($user['user_level'] === '2'): ?>
-            <!-- Special user -->
-            <?php include_once('special_menu.php'); ?>
-
-
-        <?php elseif ($user['user_level'] === '3'): ?>
-            <!-- User menu -->
-            <?php include_once('user_menu.php'); ?>
-
-        <?php elseif
-        ($user['user_level'] === '4'):
-            include_once('resepsjon_menu.php');
-            ?>
-
-        <?php endif; ?>
-
+        <?php
+        if ($user['user_level'] === '1') {
+            require('admin_menu.php');
+        } elseif ($user['user_level'] === '2') {
+            require('special_menu.php');
+        } elseif ($user['user_level'] === '3') {
+            require('user_menu.php');
+        } elseif ($user['user_level'] === '4') {
+            require('resepsjon_menu.php');
+        }
+        ob_start()
+        ?>
     </div>
 <?php endif; ?>
-
 <div class="page">
     <div class="container-fluid">

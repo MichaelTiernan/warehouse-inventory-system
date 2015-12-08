@@ -10,9 +10,9 @@ if (!$sale) {
     $session->msg("d", "Missing product id.");
     redirect('sales.php');
 }
-?>
-<?php $product = find_by_id('products', $sale['product_id']); ?>
-<?php
+
+$product = find_by_id('products', $sale['product_id']);
+
 
 if (isset($_POST['update_sale'])) {
     $req_fields = array('title', 'quantity', 'price', 'total', 'date', 'custnr', 'comment');
@@ -30,10 +30,16 @@ if (isset($_POST['update_sale'])) {
         $sql .= " product_id= '{$p_id}',qty={$s_qty},price='{$s_total}',date='{$s_date}', custnr='{$custnr}', comment='{$comment}'";
         $sql .= " WHERE id ='{$sale['id']}'";
         $result = $db->query($sql);
+
         if ($result && $db->affected_rows() === 1) {
-            update_product_qty($s_qty, $p_id);
-            $session->msg('s', "Sale updated.");
-            redirect('edit_sale.php?id=' . $sale['id'], false);
+            if ($s_qty != $product['ks_storage']) {
+                update_product_qty($s_qty, $p_id);
+                $session->msg('s', "Sale updated.");
+                redirect('edit_sale.php?id=' . $sale['id'], false);
+            } else {
+                $session->msg('s', "Sale updated.");
+                redirect('edit_sale.php?id=' . $sale['id'], false);
+            }
         } else {
             $session->msg('d', ' Sorry failed to update!');
             redirect('sales.php', false);
@@ -44,8 +50,7 @@ if (isset($_POST['update_sale'])) {
     }
 }
 
-?>
-<?php include_once('layouts/header.php'); ?>
+include_once('layouts/header.php'); ?>
 <div class="row">
     <div class="col-md-6">
         <?php echo display_msg($msg); ?>
@@ -97,7 +102,7 @@ if (isset($_POST['update_sale'])) {
                                 <input type="date" class="form-control datepicker" name="date" data-date-format="" value="<?php echo remove_junk($sale['date']); ?>">
                             </td>
                             <td>
-                                <input type='number' class='form-control' name='custnr' value="<?php echo remove_junk($sale['custnr']); ?>"required>
+                                <input type='number' class='form-control' name='custnr' value="<?php echo remove_junk($sale['custnr']); ?>" required>
                             </td>
                             <td>
                                 <textarea name="comment" rows="1" style="width: 100%"><?php echo remove_junk($sale['comment']); ?></textarea>

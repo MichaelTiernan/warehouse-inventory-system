@@ -18,7 +18,7 @@ if (isset($_POST['custnr'])) {
             $s_date = make_date();
             $s_userID = $_SESSION['user_id'];
 
-            $sql = "INSERT INTO sales (";
+            $sql = "INSERT INTO trade (";
             $sql .= " product_id, qty, price, date, custnr, comment, FK_userID";
             $sql .= ") VALUES (";
             $sql .= "'{$p_id}', '{$s_qty}', '{$s_total}', '{$s_date}', '{$custnr}', '{$comment}','$s_userID'";
@@ -33,12 +33,11 @@ if (isset($_POST['custnr'])) {
                 }
             }
         }
-        header('Location: new_sale.php');
+        header('Location: trade.php');
         exit();
 
-//        $session->msg('s', "Sale added. ");
     } else {
         $session->msg("d", $errors);
-        redirect('new_sale.php', false);
+        redirect('trade.php', false);
     }
 }

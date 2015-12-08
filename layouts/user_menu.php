@@ -7,8 +7,8 @@
     </li>
     <li>
         <a href="sales.php">
-        <i class="glyphicon glyphicon-signal"></i>
-        <span>Dine salg</span>
+            <i class="glyphicon glyphicon-signal"></i>
+            <span>Dine salg</span>
         </a>
     </li>
     <li>
