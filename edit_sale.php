@@ -26,6 +26,8 @@ if (isset($_POST['update_sale'])) {
         $comment = $db->escape($_POST['comment']);
         $s_date = date("Y-m-d", strtotime($date));
 
+        $qty_change = $s_qty - $sale['qty'];
+
         $sql = "UPDATE sales SET";
         $sql .= " product_id= '{$p_id}',qty={$s_qty},price='{$s_total}',date='{$s_date}', custnr='{$custnr}', comment='{$comment}'";
         $sql .= " WHERE id ='{$sale['id']}'";
@@ -33,7 +35,7 @@ if (isset($_POST['update_sale'])) {
 
         if ($result && $db->affected_rows() === 1) {
             if ($s_qty != $product['ks_storage']) {
-                update_product_qty($s_qty, $p_id);
+                update_product_qty($qty_change, $p_id);
                 $session->msg('s', "Sale updated.");
                 redirect('edit_sale.php?id=' . $sale['id'], false);
             } else {

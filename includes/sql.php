@@ -333,7 +333,7 @@ function find_all_sale()
     $sql .= " FROM sales s";
     $sql .= " LEFT JOIN products p ON s.product_id = p.id";
     $sql .= " LEFT JOIN users u ON s.FK_userID = u.id";
-    $sql .= " ORDER BY s.date DESC, id DESC LIMIT 50";
+    $sql .= " ORDER BY s.date DESC, id DESC LIMIT 100";
     return find_by_sql($sql);
 }
 
@@ -345,7 +345,7 @@ function find_all_user_sales()
     $sql .= " FROM sales s";
     $sql .= " LEFT JOIN products p ON s.product_id = p.id";
     $sql .= " WHERE s.FK_userID = '$userID'";
-    $sql .= " ORDER BY s.date DESC, id DESC LIMIT 50";
+    $sql .= " ORDER BY s.date DESC, id DESC LIMIT 100";
 
     return find_by_sql($sql);
 }
@@ -468,5 +468,26 @@ function storage_fix_deletion($id, $qty)
 {
     global $db;
     $sql = "UPDATE `products` SET ks_storage = (ks_storage + {$qty}) WHERE id = {$id}";
+    return find_by_sql($sql);
+}
+
+function sales_search($custnr)
+{
+    global $db;
+    $sql = "SELECT * FROM sales WHERE custnr = {$custnr}";
+    return find_by_sql($sql);
+}
+
+function storage_log($qty, $ks, $prod)
+{
+    global $db;
+    $sql ="INSERT INTO `logg`(`userID`, `quantity`, `ks_storage`, `productID`) VALUES ({$_SESSION['user_id']}, {$qty}, {$ks}, {$prod})";
+    $db->query($sql);
+}
+
+function get_log()
+{
+    global $db;
+    $sql = "SELECT p.name, l.ks_storage, l.quantity, l.updated, u.username FROM logg l LEFT JOIN products p ON l.productID = p.id JOIN users u ON l.userID = u.id ORDER BY l.id DESC LIMIT 100";
     return find_by_sql($sql);
 }

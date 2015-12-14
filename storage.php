@@ -23,19 +23,23 @@ if (isset($_POST['storage'])) {
         $I_hovedlager = $_POST["hovedlager-$i"];
         $I_kslager = $_POST["ks-lager-$i"];
 
-        //TODO legge inn if som sjekker om verdier har vært forandret og fiks quantity
-        //TODO Quantity fikses med å hente gammel verdi for kslageret og ta quantity minus den.
-        //TODO Legge til if som setter quantity til 0?
+        $changeKS = $storageStatus[$i - 1]['ks_storage'] != $I_kslager;
+        $changeH = $storageStatus[$i - 1]['quantity'] != $I_hovedlager;
 
-        $query = "UPDATE products SET ks_storage = '{$I_kslager}', quantity = '{$I_hovedlager}' WHERE id = '{$i}'";
-        $result = $db->query($query);
-        if ($result && $db->affected_rows() === 1) {
-            $dbupdate = true;
+        $KS_qty = $I_kslager - $storageStatus[$i - 1]['ks_storage'];
+        $H_qty = $I_hovedlager - $storageStatus[$i - 1]['quantity'];
+
+        if ($changeKS || $changeH) {
+            $query = "UPDATE products SET ks_storage = '{$I_kslager}', quantity = '{$I_hovedlager}', last_edited_by = '{$_SESSION['user_id']}' WHERE id = '{$i}'";
+            $result = $db->query($query);
+            storage_log($H_qty, $KS_qty, $i);
+
+            if ($result && $db->affected_rows() === 1) {
+                $dbupdate = true;
+            }
         }
     }
 
-
-    //TODO viser ikke statusmelding på oppdatert lager.
     if ($dbupdate) {
         $session->msg('s', "Lagerstatus oppdatert");
 //        redirect('home.php', true);

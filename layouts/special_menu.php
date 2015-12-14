@@ -26,7 +26,7 @@
     <li>
         <a href="trade.php" class="submenu-toggle">
             <i class="glyphicon glyphicon-th-list"></i>
-            <span>Registrer bytte</span>
+            <span>Registrer Retur</span>
         </a>
     </li>
 </ul>
