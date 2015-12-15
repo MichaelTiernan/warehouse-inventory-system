@@ -350,6 +350,29 @@ function find_all_user_sales()
     return find_by_sql($sql);
 }
 
+function find_all_trades()
+{
+    global $db;
+    $sql = "SELECT t.id, t.qty, t.price, t.date, p.name, t.comment, t.custnr, u.username";
+    $sql .= " FROM trade t";
+    $sql .= " LEFT JOIN products p ON t.product_id = p.id";
+    $sql .= " LEFT JOIN users u ON t.FK_userID = u.id";
+    $sql .= " ORDER BY t.date DESC, id DESC LIMIT 100";
+    return find_by_sql($sql);
+}
+
+function find_all_user_trades()
+{
+    $userID = $_SESSION['user_id'];
+
+    $sql = "SELECT t.id, t.qty, t.price, t.date, p.name, t.comment, t.custnr";
+    $sql .= " FROM trade t";
+    $sql .= " LEFT JOIN products p ON t.product_id = p.id";
+    $sql .= " WHERE t.FK_userID = '$userID'";
+    $sql .= " ORDER BY t.date DESC, id DESC LIMIT 100";
+    return find_by_sql($sql);
+}
+
 /*--------------------------------------------------------------*/
 /* Function for Display Recent sale
 /*--------------------------------------------------------------*/
@@ -428,7 +451,7 @@ function storage_status()
 function get_last_product_id()
 {
     global $db;
-    $sql = "SELECT MAX(id) FROM products";
+    $sql = "SELECT COUNT(id) FROM products";
     return find_by_sql($sql);
 }
 

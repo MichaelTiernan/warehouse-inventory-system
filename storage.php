@@ -17,22 +17,31 @@ $storageStatus = storage_status();
 $prod_id = get_last_product_id();
 $dbupdate = false;
 
+$storageProd = [];
+
+foreach ($storageStatus as $stg) {
+    array_push($storageProd, $stg);
+}
 
 if (isset($_POST['storage'])) {
-    for ($i = 1; $i <= $prod_id[0]['MAX(id)']; $i++) {
-        $I_hovedlager = $_POST["hovedlager-$i"];
-        $I_kslager = $_POST["ks-lager-$i"];
+    $max = count($_POST['hovedlager']);
 
-        $changeKS = $storageStatus[$i - 1]['ks_storage'] != $I_kslager;
-        $changeH = $storageStatus[$i - 1]['quantity'] != $I_hovedlager;
+    for ($i = 0; $i < $max; $i++) {
+        $I_hovedlager = $_POST["hovedlager"][$i];
+        $I_kslager = $_POST["ks-lager"][$i];
 
-        $KS_qty = $I_kslager - $storageStatus[$i - 1]['ks_storage'];
-        $H_qty = $I_hovedlager - $storageStatus[$i - 1]['quantity'];
+
+        $changeKS = $storageProd[$i]['ks_storage'] != $I_kslager;
+        $changeH = $storageProd[$i]['quantity'] != $I_hovedlager;
+
+
+        $KS_qty = $I_kslager - $storageProd[$i]['ks_storage'];
+        $H_qty = $I_hovedlager - $storageProd[$i]['quantity'];
 
         if ($changeKS || $changeH) {
-            $query = "UPDATE products SET ks_storage = '{$I_kslager}', quantity = '{$I_hovedlager}', last_edited_by = '{$_SESSION['user_id']}' WHERE id = '{$i}'";
+            $query = "UPDATE products SET ks_storage = '{$I_kslager}', quantity = '{$I_hovedlager}', last_edited_by = '{$_SESSION['user_id']}' WHERE id = '{$_POST['id'][$i]}'";
             $result = $db->query($query);
-            storage_log($H_qty, $KS_qty, $i);
+            storage_log($H_qty, $KS_qty, $_POST['id'][$i]);
 
             if ($result && $db->affected_rows() === 1) {
                 $dbupdate = true;
@@ -81,8 +90,11 @@ if (isset($_POST['storage'])) {
                                 ?>
                                 <tr class="text-center">
                                     <td><?php echo first_character($storage['name']); ?></td>
-                                    <?php echo("<td><input type='number' class='form-control' name='hovedlager-$storageID' value='$hovedlager_value' required>"); ?>
-                                    <td><input type="number" class="form-control" name="ks-lager-<?php echo($storage['id']); ?>" value="<?php echo($storage['ks_storage']); ?>" required></td>
+                                    <?php echo("<td><input type='number' class='form-control' name='hovedlager[]' value='$hovedlager_value' required>"); ?>
+                                    <td>
+                                        <input type="number" class="form-control" name="ks-lager[]" value="<?php echo($storage['ks_storage']); ?>" required>
+                                        <input type="number" name="id[]" value="<?php echo($storageID) ?>" hidden>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                             <tr>

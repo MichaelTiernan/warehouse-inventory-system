@@ -67,7 +67,6 @@ if ($isAdmin) {
                         </div>
                     </div>
 
-
                 </div>
                 <table class="table table-bordered">
                     <thead>
