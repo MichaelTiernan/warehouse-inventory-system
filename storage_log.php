@@ -30,8 +30,8 @@ include_once('layouts/header.php'); ?>
                     <thead>
                     <tr>
                         <th class="text-center">Produktnavn</th>
-                        <th class="text-center">Differanse ks-lager</th>
                         <th class="text-center">Differanse hovedlager</th>
+                        <th class="text-center">Differanse ks-lager</th>
                         <th class="text-center">Tidspunkt</th>
                         <th class="text-center">Bruker</th>
                     </tr>
@@ -40,8 +40,8 @@ include_once('layouts/header.php'); ?>
                     <?php foreach ($logs as $log): ?>
                         <tr>
                             <td class="text-center"><?php echo($log['name']); ?></td>
-                            <td class="text-center"><?php echo($log['ks_storage']); ?></td>
                             <td class="text-center"><?php echo($log['quantity']); ?></td>
+                            <td class="text-center"><?php echo($log['ks_storage']); ?></td>
                             <td class="text-center"><?php echo($log['updated']); ?></td>
                             <td class="text-center"><?php echo($log['username']); ?></td>
                         </tr>
