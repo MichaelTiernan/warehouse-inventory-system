@@ -11,4 +11,10 @@
             <span>Registrer Retur</span>
         </a>
     </li>
+    <li>
+        <a href="trades.php" class="submenu-toggle">
+            <i class="glyphicon glyphicon-th-list"></i>
+            <span>Dine Returer</span>
+        </a>
+    </li>
 </ul>

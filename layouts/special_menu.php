@@ -12,21 +12,23 @@
         </a>
     </li>
     <li>
-        <a href="sales.php">
-            <i class="glyphicon glyphicon-signal"></i>
-            <span>Dine salg</span>
+        <a href="#" class="submenu-toggle">
+            <i class="glyphicon glyphicon-th-list"></i>
+            <span>Salg</span>
         </a>
+        <ul class="nav submenu">
+            <li><a href="sales.php">Alle Salg</a> </li>
+            <li><a href="../new_sale.php">Registrer salg</a> </li>
+        </ul>
     </li>
     <li>
-        <a href="new_sale.php" class="submenu-toggle">
+        <a href="#" class="submenu-toggle">
             <i class="glyphicon glyphicon-th-list"></i>
-            <span>Registrer salg</span>
+            <span>Returer</span>
         </a>
-    </li>
-    <li>
-        <a href="trade.php" class="submenu-toggle">
-            <i class="glyphicon glyphicon-th-list"></i>
-            <span>Registrer Retur</span>
-        </a>
+        <ul class="nav submenu">
+            <li><a href="trades.php">Alle returer</a> </li>
+            <li><a href="../trade.php">Registrer Retur</a></li>
+        </ul>
     </li>
 </ul>

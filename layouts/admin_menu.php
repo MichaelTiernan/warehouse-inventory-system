@@ -53,9 +53,18 @@
             <span>Salg</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="sales.php">Salg</a> </li>
+            <li><a href="sales.php">Alle Salg</a> </li>
             <li><a href="../admin_sales.php">Mine Salg</a> </li>
             <li><a href="../new_sale.php">Registrer salg</a> </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="submenu-toggle">
+            <i class="glyphicon glyphicon-th-list"></i>
+            <span>Returer</span>
+        </a>
+        <ul class="nav submenu">
+            <li><a href="trades.php">Alle returer</a> </li>
             <li><a href="../trade.php">Registrer Retur</a></li>
         </ul>
     </li>

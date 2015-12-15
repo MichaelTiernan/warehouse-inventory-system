@@ -12,6 +12,12 @@
         </a>
     </li>
     <li>
+        <a href="trades.php" class="submenu-toggle">
+            <i class="glyphicon glyphicon-signal"></i>
+            <span>Dine Returer</span>
+        </a>
+    </li>
+    <li>
         <a href="new_sale.php" class="submenu-toggle">
             <i class="glyphicon glyphicon-th-list"></i>
             <span>Registrer salg</span>
