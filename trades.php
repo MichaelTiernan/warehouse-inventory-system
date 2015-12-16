@@ -25,7 +25,7 @@ include_once('layouts/header.php'); ?>
             <div class="panel-heading clearfix">
                 <strong>
                     <span class="glyphicon glyphicon-th"></span>
-                    <span>Salg</span>
+                    <span>Returer</span>
                 </strong>
             </div>
             <div class="panel-body">
