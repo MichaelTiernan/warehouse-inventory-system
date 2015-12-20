@@ -28,6 +28,7 @@ if (isset($_POST['p_name']) && strlen($_POST['p_name'])) {
             $html .= "<input type=\"hidden\" class=\"form-control\" name=\"total\" value=\"{$result['sale_price']}\" readonly>";
             $html .= "</td>";
 
+
             $html .= "</tr>";
 
         }

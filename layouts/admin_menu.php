@@ -74,7 +74,7 @@
             <span>Sales Report</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="sales_report.php">Sales by dates </a></li>
+            <li><a href="sales_report.php">Salgsrapport</a></li>
             <li><a href="monthly_sales.php">Monthly sales</a></li>
             <li><a href="daily_sales.php">Daily sales</a> </li>
         </ul>
