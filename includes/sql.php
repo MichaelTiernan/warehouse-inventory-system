@@ -408,6 +408,23 @@ function find_sale_by_dates($start_date, $end_date)
     return $db->query($sql);
 }
 
+function get_sales_by_date($start, $end, $id)
+{
+    global $db;
+    $start = date("Y-m-d", strtotime($start));
+    $end = date("Y-m-d", strtotime($end));
+    $sql = "SELECT p.name, SUM(s.qty) as sold, COUNT(s.id) as sales, p.ks_storage FROM sales s LEFT JOIN products p ON p.id = s.product_id WHERE s.product_id = {$id} AND s.date BETWEEN '{$start}' AND '{$end}'";
+    return find_by_sql($sql);
+}
+
+function get_storage($start, $id)
+{
+    global $db;
+    $start = date("Y-m-d", strtotime($start));
+    $sql = "SELECT p.name, SUM(s.qty) as sold, COUNT(s.id) as sales, p.ks_storage FROM sales s LEFT JOIN products p ON p.id = s.product_id WHERE s.product_id = {$id} AND s.date >= '{$start}'";
+    return find_by_sql($sql);
+}
+
 /*--------------------------------------------------------------*/
 /* Function for Generate Daily sales report
 /*--------------------------------------------------------------*/
@@ -465,7 +482,7 @@ function get_products_from_categories()
 function get_products_user()
 {
     global $db;
-    $sql = "SELECT * FROM `products` WHERE bedrift = 0 ORDER BY id ASC";
+    $sql = "SELECT * FROM `products` WHERE categorie_id != 4 ORDER BY id ASC";
     return find_by_sql($sql);
 }
 
@@ -512,5 +529,12 @@ function get_log()
 {
     global $db;
     $sql = "SELECT p.name, l.ks_storage, l.quantity, l.updated, u.username FROM logg l LEFT JOIN products p ON l.productID = p.id JOIN users u ON l.userID = u.id ORDER BY l.id DESC LIMIT 100";
+    return find_by_sql($sql);
+}
+
+function get_unique_pid($start, $end)
+{
+    global $db;
+    $sql = "SELECT DISTINCT product_id FROM sales WHERE date BETWEEN '{$start}' AND '{$end}' ORDER BY product_id ASC";
     return find_by_sql($sql);
 }

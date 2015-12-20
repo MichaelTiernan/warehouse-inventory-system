@@ -1,5 +1,5 @@
 <?php
-$page_title = 'Sales Report';
+$page_title = 'Salgsrapport';
 require_once('includes/load.php');
 // Checking userlevel
 page_require_level(1);
@@ -17,7 +17,7 @@ include_once('layouts/header.php'); ?>
 
             </div>
             <div class="panel-body">
-                <form class="clearfix" method="post" action="sale_report_process.php">
+                <form class="clearfix" method="post" action="sale_report_output.php">
                     <div class="form-group">
                         <label class="form-label">Date Range</label>
 
@@ -32,9 +32,7 @@ include_once('layouts/header.php'); ?>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
-
 </div>
 <?php include_once('layouts/footer.php'); ?>

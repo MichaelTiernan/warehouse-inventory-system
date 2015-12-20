@@ -3,7 +3,7 @@ $page_title = 'Dine returer';
 require_once('includes/load.php');
 
 // Checking userlevel
-page_require_level(3);
+page_require_level(4);
 
 //Show only own sales, unless userlevel is admin
 if (get_userlevel() == 1) {
@@ -25,7 +25,7 @@ include_once('layouts/header.php'); ?>
             <div class="panel-heading clearfix">
                 <strong>
                     <span class="glyphicon glyphicon-th"></span>
-                    <span>Salg</span>
+                    <span>Returer</span>
                 </strong>
             </div>
             <div class="panel-body">
