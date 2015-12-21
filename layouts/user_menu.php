@@ -20,7 +20,7 @@
     <li>
         <a href="new_sale.php" class="submenu-toggle">
             <i class="glyphicon glyphicon-th-list"></i>
-            <span>Registrer salg</span>
+            <span>Registrer utlevering</span>
         </a>
     </li>
     <li>
