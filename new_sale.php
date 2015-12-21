@@ -1,6 +1,6 @@
 <?php
 require_once('includes/load.php');
-$page_title = 'Registrer salg';
+$page_title = 'Registrer utlevering';
 // Checking userlevel
 page_require_level(3);
 
@@ -30,7 +30,7 @@ if ($isAdmin) {
         <div class="panel-heading clearfix">
             <strong>
                 <span class="glyphicon glyphicon-th"></span>
-                <span>Salg</span>
+                <span>Utlevering</span>
             </strong>
         </div>
         <div class="panel-body">
