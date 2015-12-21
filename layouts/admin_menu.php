@@ -55,7 +55,7 @@
         <ul class="nav submenu">
             <li><a href="sales.php">Alle Salg</a> </li>
             <li><a href="../admin_sales.php">Mine Salg</a> </li>
-            <li><a href="../new_sale.php">Registrer salg</a> </li>
+            <li><a href="../new_sale.php">Registrer utlevering</a> </li>
         </ul>
     </li>
     <li>
