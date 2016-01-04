@@ -17,16 +17,23 @@ if (isset($_POST['custnr'])) {
             $comment = $db->escape($_POST['comment']);
             $s_date = make_date();
             $s_userID = $_SESSION['user_id'];
+            $s_mac = $db->escape($_POST['mac'][$i]);
+
+            $productCategory = find_by_id('products', $p_id);
 
             $sql = "INSERT INTO sales (";
-            $sql .= " product_id, qty, price, date, custnr, comment, FK_userID";
+            $sql .= " product_id, qty, price, date, custnr, comment, FK_userID, mac";
             $sql .= ") VALUES (";
-            $sql .= "'{$p_id}', '{$s_qty}', '{$s_total}', '{$s_date}', '{$custnr}', '{$comment}','$s_userID'";
+            $sql .= "'{$p_id}', '{$s_qty}', '{$s_total}', '{$s_date}', '{$custnr}', '{$comment}','$s_userID', '{$s_mac}'";
             $sql .= ")";
 
             if ($s_qty > 0) {
                 if ($db->query($sql)) {
-                    update_product_qty($s_qty, $p_id);
+                    if ($productCategory['categorie_id'] == 4) {
+                        update_bedrift_qty($s_qty, $p_id);
+                    } else {
+                        update_product_qty($s_qty, $p_id);
+                    }
 //                    $session->msg('s', "Sale added. ");
                 } else {
 //                    $session->msg('d', ' Sorry failed to add!');
@@ -34,9 +41,9 @@ if (isset($_POST['custnr'])) {
             }
         }
         header('Location: new_sale.php');
+//        $session->msg('s', "Sale added. ");
         exit();
 
-//        $session->msg('s', "Sale added. ");
     } else {
         $session->msg("d", $errors);
         redirect('new_sale.php', false);

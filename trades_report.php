@@ -1,5 +1,5 @@
 <?php
-$page_title = 'Salgsrapport';
+$page_title = 'Returrapport';
 require_once('includes/load.php');
 // Checking userlevel
 page_require_level(1);
@@ -17,9 +17,9 @@ include_once('layouts/header.php'); ?>
 
             </div>
             <div class="panel-body">
-                <form class="clearfix" method="post" action="sale_report_output.php">
+                <form class="clearfix" method="post" action="trade_report.php">
                     <div class="form-group">
-                        <label class="form-label">Utlevering</label>
+                        <label class="form-label">Returer<br></label>
 
                         <div class="input-group">
                             <input type="text" class="datepicker form-control" name="start-date" placeholder="Startdato">

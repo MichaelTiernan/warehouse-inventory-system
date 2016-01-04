@@ -292,7 +292,16 @@ function update_product_qty($qty, $p_id)
     $sql = "UPDATE products SET ks_storage=ks_storage -'{$qty}' WHERE id = '{$id}'";
     $result = $db->query($sql);
     return ($db->affected_rows() === 1 ? true : false);
+}
 
+function update_bedrift_qty($qty, $p_id)
+{
+    global $db;
+    $qty = (int)$qty;
+    $id = (int)$p_id;
+    $sql = "UPDATE products SET quantity = quantity -'{$qty}' WHERE id = '{$id}'";
+    $result = $db->query($sql);
+    return ($db->affected_rows() === 1 ? true : false);
 }
 
 /*--------------------------------------------------------------*/
@@ -329,7 +338,7 @@ function find_higest_saleing_product($limit)
 function find_all_sale()
 {
     global $db;
-    $sql = "SELECT s.id, s.qty, s.price, s.date, p.name, s.comment, s.custnr, u.username";
+    $sql = "SELECT s.id, s.qty, s.price, s.date, p.name, s.comment, s.custnr, u.username, s.mac";
     $sql .= " FROM sales s";
     $sql .= " LEFT JOIN products p ON s.product_id = p.id";
     $sql .= " LEFT JOIN users u ON s.FK_userID = u.id";
@@ -341,7 +350,7 @@ function find_all_user_sales()
 {
     $userID = $_SESSION['user_id'];
 
-    $sql = "SELECT s.id,s.qty,s.price,s.date,p.name, s.comment, s.custnr";
+    $sql = "SELECT s.id,s.qty,s.price,s.date,p.name, s.comment, s.custnr, s.mac";
     $sql .= " FROM sales s";
     $sql .= " LEFT JOIN products p ON s.product_id = p.id";
     $sql .= " WHERE s.FK_userID = '$userID'";
@@ -353,10 +362,11 @@ function find_all_user_sales()
 function find_all_trades()
 {
     global $db;
-    $sql = "SELECT t.id, t.qty, t.price, t.date, p.name, t.comment, t.custnr, u.username";
+    $sql = "SELECT t.id, t.qty, t.price, t.date, p.name, t.comment, t.custnr, u.username, r.categoryName, t.mac";
     $sql .= " FROM trade t";
     $sql .= " LEFT JOIN products p ON t.product_id = p.id";
     $sql .= " LEFT JOIN users u ON t.FK_userID = u.id";
+    $sql .= " LEFT JOIN returncategory r on FK_returnCategory = r.id";
     $sql .= " ORDER BY t.date DESC, id DESC LIMIT 100";
     return find_by_sql($sql);
 }
@@ -365,9 +375,10 @@ function find_all_user_trades()
 {
     $userID = $_SESSION['user_id'];
 
-    $sql = "SELECT t.id, t.qty, t.price, t.date, p.name, t.comment, t.custnr";
+    $sql = "SELECT t.id, t.qty, t.price, t.date, p.name, t.comment, t.custnr, r.categoryName, t.mac";
     $sql .= " FROM trade t";
     $sql .= " LEFT JOIN products p ON t.product_id = p.id";
+    $sql .= " LEFT JOIN returncategory r on FK_returnCategory = r.id";
     $sql .= " WHERE t.FK_userID = '$userID'";
     $sql .= " ORDER BY t.date DESC, id DESC LIMIT 100";
     return find_by_sql($sql);
@@ -428,13 +439,12 @@ function get_storage($start, $id)
 /*--------------------------------------------------------------*/
 /* Function for Generate Daily sales report
 /*--------------------------------------------------------------*/
-function  dailySales($year, $month)
+function dailySales($year, $month)
 {
     global $db;
-    $sql = "SELECT s.qty,u.username,";
-    $sql .= " DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name,";
+    $sql = "SELECT s.qty, u.username,DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name,";
     $sql .= "(p.sale_price * s.qty) AS total_saleing_price";
-    $sql .= " FROM sales s JOIN users u ON s.FK_userID ";
+    $sql .= " FROM sales s JOIN users u ON s.FK_userID = u.id";
     $sql .= " LEFT JOIN products p ON s.product_id = p.id";
     $sql .= " WHERE DATE_FORMAT(s.date, '%Y-%m' ) = '{$year}-{$month}'";
     $sql .= " GROUP BY DATE_FORMAT( s.date,  '%e' ),s.product_id ORDER BY s.id DESC";
@@ -444,7 +454,7 @@ function  dailySales($year, $month)
 /*--------------------------------------------------------------*/
 /* Function for Generate Monthly sales report
 /*--------------------------------------------------------------*/
-function  monthlySales($year)
+function monthlySales($year)
 {
     global $db;
     $sql = "SELECT s.qty,";
@@ -489,7 +499,7 @@ function get_products_user()
 function get_categories_user()
 {
     global $db;
-    $sql = "SELECT * FROM `categories` WHERE id < 4 ORDER BY id ASC";
+    $sql = "SELECT * FROM `categories` WHERE id != 4 ORDER BY id ASC";
     return find_by_sql($sql);
 }
 
@@ -521,7 +531,7 @@ function sales_search($custnr)
 function storage_log($qty, $ks, $prod)
 {
     global $db;
-    $sql ="INSERT INTO `logg`(`userID`, `quantity`, `ks_storage`, `productID`) VALUES ({$_SESSION['user_id']}, {$qty}, {$ks}, {$prod})";
+    $sql = "INSERT INTO `logg`(`userID`, `quantity`, `ks_storage`, `productID`) VALUES ({$_SESSION['user_id']}, {$qty}, {$ks}, {$prod})";
     $db->query($sql);
 }
 
@@ -536,5 +546,37 @@ function get_unique_pid($start, $end)
 {
     global $db;
     $sql = "SELECT DISTINCT product_id FROM sales WHERE date BETWEEN '{$start}' AND '{$end}' ORDER BY product_id ASC";
+    return find_by_sql($sql);
+}
+
+function get_unique_pid_trades($start, $end)
+{
+    global $db;
+    $sql = "SELECT DISTINCT t.product_id, p.name FROM trade t LEFT JOIN products p ON t.product_id = p.id WHERE t.date BETWEEN '{$start}' AND '{$end}' ORDER BY product_id ASC";
+    return find_by_sql($sql);
+}
+
+function get_trades_by_dates($start, $end, $id, $cat)
+{
+    global $db;
+    $start = date("Y-m-d", strtotime($start));
+    $end = date("Y-m-d", strtotime($end));
+    $sql = "SELECT SUM(t.qty) as antall FROM trade t WHERE product_id = {$id} AND t.FK_returnCategory = {$cat} AND t.date BETWEEN '{$start}' AND '{$end}' ";
+    return find_by_sql($sql);
+}
+
+function get_trade_total($start, $end, $id)
+{
+    global $db;
+    $start = date("Y-m-d", strtotime($start));
+    $end = date("Y-m-d", strtotime($end));
+    $sql = "SELECT SUM(t.qty) as totalt FROM trade t WHERE t.product_id = {$id} AND t.date BETWEEN '{$start}' AND '{$end}'";
+    return find_by_sql($sql);
+}
+
+function get_active_category($id)
+{
+    global $db;
+    $sql = "SELECT r.categoryName FROM trade t LEFT JOIN returnCategory r ON t.FK_returnCategory = r.id WHERE t.id = {$id}";
     return find_by_sql($sql);
 }

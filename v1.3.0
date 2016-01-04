@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS returnCategory (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  categoryName varchar(25) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+INSERT INTO returnCategory (categoryName) VALUES
+('Oppsigelse'),
+('Defekt'),
+('Flytting'),
+('Oppgradering'),
+('Annet');
+
+ALTER TABLE trade
+ADD FK_returnCategory int(11) unsigned;
+
+ALTER TABLE trade
+ADD FOREIGN KEY (FK_returnCategory) REFERENCES returnCategory(id);
+
+ALTER TABLE products ADD hasMAC int(11) unsigned DEFAULT '0';
+
+ALTER TABLE sales ADD mac varchar(25);
+
+ALTER TABLE trade ADD mac varchar(25);

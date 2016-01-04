@@ -4,7 +4,7 @@ require_once('includes/load.php');
 include_once('layouts/header.php');
 
 // Checking userlevel
-page_require_level(2);
+page_require_level(1);
 
 //Show only own sales, unless userlevel is admin
 if (get_userlevel() == 1) {
@@ -90,7 +90,12 @@ if (isset($_POST['storage'])) {
                                 ?>
                                 <tr class="text-center">
                                     <td><?php echo first_character($storage['name']); ?></td>
-                                    <?php echo("<td><input type='number' class='form-control' name='hovedlager[]' value='$hovedlager_value' required>"); ?>
+                                    <?php if ($is_admin) {
+                                        echo("<td><input type='number' class='form-control' name='hovedlager[]' value='$hovedlager_value' required>");
+                                    } else {
+                                        echo("<td><input type='number' class='form-control' name='hovedlager[]' value='$hovedlager_value' readonly>");
+                                    }
+                                    ?>
                                     <td>
                                         <input type="number" class="form-control" name="ks-lager[]" value="<?php echo($storage['ks_storage']); ?>" required>
                                         <input type="number" name="id[]" value="<?php echo($storageID) ?>" hidden>
@@ -100,7 +105,7 @@ if (isset($_POST['storage'])) {
                             <tr>
                                 <td colspan="2"></td>
                                 <td>
-                                    <button type="submit" name="storage" class="btn btn-danger">Oppdater lagerstatus</button>
+                                    <button type="submit" name="storage" class="btn btn-success">Oppdater lagerstatus</button>
                                 </td>
                             </tr>
                             <tbody>

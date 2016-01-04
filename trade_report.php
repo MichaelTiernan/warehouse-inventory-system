@@ -1,5 +1,5 @@
 <?php
-$page_title = 'Salgsrapport';
+$page_title = 'Returrapport';
 $results = '';
 require_once('includes/load.php');
 // Checking userlevel
@@ -8,25 +8,29 @@ page_require_level(1);
 if (isset($_POST['submit'])) {
     $req_dates = array('start-date', 'end-date');
     validate_fields($req_dates);
-
+    $returnCategories = find_all('returnCategory');
 
 
     if (empty($errors)):
         $idArray = [];
         $resultArray = [];
         $end_date_storage = [];
+        $return_total = [];
         $start_date = remove_junk($db->escape($_POST['start-date']));
         $end_date = remove_junk($db->escape($_POST['end-date']));
 
-        $p_id = get_unique_pid($start_date, $end_date);
+        //finner alle unike produktid-er der det har vært trades.
+        $p_id = get_unique_pid_trades($start_date, $end_date);
 
+        //Pusher de til array så de kan lett itereres.
         foreach ($p_id as $id) {
-            array_push($idArray, $id['product_id']);
+            array_push($idArray, $id);
+            array_push($return_total, get_trade_total($start_date, $end_date, $id['product_id']));
         }
 
-        foreach ($idArray as $id) {
-            array_push($resultArray, get_sales_by_date($start_date, $end_date, $id));
-        }
+    //skal her hente ut returinfo for produktene. har produkt-id, trenger kun hvor mange som har blitt returnert av hver FK_returncategoryID
+    //må mekke en funksjon som returnerer summen av antallet som har vært returnert. Array i en array? Sjekke for p_id og deretter RC_id per funksjon? Så springe en liten for-loop inne i foreach.
+
 
     else:
         $session->msg("d", $errors);
@@ -39,7 +43,7 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <!doctype html>
-<html>
+<html lang="no">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Salgsrapport</title>
@@ -109,10 +113,10 @@ if (isset($_POST['submit'])) {
     </style>
 </head>
 <body>
-<?php if ($resultArray): ?>
+<?php if ($idArray): ?>
     <div class="page-break">
         <div class="sale-head pull-right">
-            <h1>Rapport Utleveringer</h1>
+            <h1>Rapport Returer</h1>
             <strong><?php if (isset($start_date)) {
                     echo $start_date;
                 } ?> til <?php if (isset($end_date)) {
@@ -123,16 +127,26 @@ if (isset($_POST['submit'])) {
             <thead>
             <tr>
                 <th>Produktnavn</th>
-                <th>Antall salg</th>
-                <th>Antall solgt</th>
+                <th>Antall Returnert</th>
+                <?php foreach ($returnCategories as $returns): ?>
+                    <th><?php echo($returns['categoryName']); ?></th>
+                <?php endforeach; ?>
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($resultArray as $result): ?>
+            <?php foreach ($idArray as $id): ?>
                 <tr>
-                    <td class="desc"><?php echo($result[0]['name']); ?></td>
-                    <td class="text-right"><?php echo($result[0]['sold']); ?></td>
-                    <td class="text-right"><?php echo($result[0]['sales']); ?></td>
+                    <td class="desc"><?php echo($id['name']); ?></td>
+                    <td class="text-right"><?php echo(get_trade_total($start_date, $end_date, $id['product_id'])[0]['totalt']); ?></td>
+                    <?php for ($i = 1; $i < 6; $i++) {
+                        $returnCat = get_trades_by_dates($start_date, $end_date, $id['product_id'], $i)[0]['antall'];
+                        if ($returnCat > 0) {
+                            echo("<td class='text-right'>{$returnCat}</td>");
+                        } else {
+                            echo("<td class='text-right'>0</td>");
+                        }
+                    }
+                    ?>
                 </tr>
             <?php endforeach; ?>
             </tbody>
@@ -140,7 +154,7 @@ if (isset($_POST['submit'])) {
     </div>
     <?php
 else:
-    $session->msg("d", "Ingen salg funnet ");
+    $session->msg("d", "Ingen returer funnet ");
     redirect('sales_report.php', false);
 endif;
 ?>

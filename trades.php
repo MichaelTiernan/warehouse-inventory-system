@@ -35,10 +35,11 @@ include_once('layouts/header.php'); ?>
                         <th class="text-center" style="width: 50px;">#</th>
                         <th> Produkt</th>
                         <th class="text-center" style="width: 5%;"> Antall</th>
-                        <th class="text-center" style="width: 5%;"> Total</th>
                         <th class="text-center" style="width: 5%;"> Dato</th>
                         <?php if(get_userlevel() == 1) { echo("<th class='text-center'> Bruker </th>"); } ?>
                         <th class="text-center" style="width: 5%;"> Kundenummer</th>
+                        <th class="text-center" style="width: 5%;"> Årsak</th>
+                        <th class="text-center" style="width: 5%;"> MAC</th>
                         <th class="text-center" style="width: 50%;"> Kommentar</th>
                         <th class="text-center" style="width: 100px;"> Handlinger</th>
                     </tr>
@@ -49,10 +50,11 @@ include_once('layouts/header.php'); ?>
                             <td class="text-center"><?php echo count_id(); ?></td>
                             <td><?php echo remove_junk($trade['name']); ?></td>
                             <td class="text-center"><?php echo (int)$trade['qty']; ?></td>
-                            <td class="text-center"><?php echo remove_junk($trade['price']); ?>,-</td>
                             <td class="text-center"><?php echo $trade['date']; ?></td>
                             <?php if(get_userlevel() == 1) { echo("<td class='text-center'>{$trade['username']}</td> "); } ?>
                             <td class="text-center"><?php echo $trade['custnr']; ?></td>
+                            <td class="text-center"><?php echo $trade['categoryName']; if ($trade['categoryName'] === null) {echo 'Annet';} ?></td>
+                            <td class="text-center"><?php echo $trade['mac']; ?></td>
                             <td class="text-center" style="max-width: 250px"><?php echo $trade['comment']; ?></td>
                             <td class="text-center">
                                 <div class="btn-group">

@@ -25,6 +25,8 @@ if (isset($_POST['product'])) {
         $p_buy = remove_junk($db->escape($_POST['buy_price']));
         $p_product_code = remove_junk($db->escape(($_POST['product_number'])));
         $p_sale = remove_junk($db->escape($_POST['saleing-price']));
+        $hasMAC = remove_junk($db->escape($_POST['hasMac']));
+
         if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
             $media_id = '0';
         } else {
@@ -32,7 +34,7 @@ if (isset($_POST['product'])) {
         }
         $query = "UPDATE products SET";
         $query .= " name ='{$p_name}', quantity ='{$p_qty}',";
-        $query .= " ks_storage ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}',media_id='{$media_id}', product_number='{$p_product_code}', buy_price='{$p_buy}'";
+        $query .= " ks_storage ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}',media_id='{$media_id}', product_number='{$p_product_code}', buy_price='{$p_buy}', hasMAC='{$hasMAC}'";
         $query .= " WHERE id ='{$product['id']}'";
         $result = $db->query($query);
         if ($result && $db->affected_rows() === 1) {
@@ -163,6 +165,15 @@ if (isset($_POST['product'])) {
                                         <input type="number" class="form-control" name="saleing-price" value="<?php echo remove_junk($product['sale_price']); ?>">
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="qty">MAC</label>
+                                <select class="form-control" name="hasMac">
+                                    <option value="0">Ingen MAC</option>
+                                    <option value="1">Har MAC</option>
+                                </select>
                             </div>
 
                         </div>

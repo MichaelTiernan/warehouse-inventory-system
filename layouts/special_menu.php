@@ -6,9 +6,9 @@
         </a>
     </li>
     <li>
-        <a href="storage.php">
+        <a href="ks_storage.php">
             <i class="glyphicon glyphicon-signal"></i>
-            <span>Lagerstatus</span>
+            <span>Lagerpåfyll</span>
         </a>
     </li>
     <li>
@@ -17,8 +17,8 @@
             <span>Salg</span>
         </a>
         <ul class="nav submenu">
+            <li><a href="../new_sale.php">Registrer Utlevering</a> </li>
             <li><a href="sales.php">Alle Salg</a> </li>
-            <li><a href="../new_sale.php">Registrer utlevering</a> </li>
         </ul>
     </li>
     <li>
@@ -27,8 +27,8 @@
             <span>Returer</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="trades.php">Alle returer</a> </li>
             <li><a href="../trade.php">Registrer Retur</a></li>
+            <li><a href="trades.php">Alle Returer</a> </li>
         </ul>
     </li>
 </ul>

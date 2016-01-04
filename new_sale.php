@@ -14,7 +14,6 @@ if (get_userlevel() == 1) {
 
 $prod_id = get_last_product_id();
 
-
 if ($isAdmin) {
     $products = get_products_from_categories();
     $categories = find_all('categories');
@@ -70,9 +69,10 @@ if ($isAdmin) {
                 </div>
                 <table class="table table-bordered">
                     <thead>
-                    <th style="width: 33%"> Produkt</th>
-                    <th style="width: 33%"> Pris</th>
-                    <th style="width: 33%"> Antall</th>
+                    <th style="width: 25%"> Produkt</th>
+                    <th style="width: 25%"> Pris</th>
+                    <th style="width: 25%"> Antall</th>
+                    <th style="width: 25%"> MAC</th>
                     </thead>
 
                     <tbody id="result">

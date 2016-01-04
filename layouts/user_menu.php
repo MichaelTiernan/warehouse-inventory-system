@@ -8,7 +8,7 @@
     <li>
         <a href="sales.php">
             <i class="glyphicon glyphicon-signal"></i>
-            <span>Dine salg</span>
+            <span>Dine Salg</span>
         </a>
     </li>
     <li>
@@ -20,7 +20,7 @@
     <li>
         <a href="new_sale.php" class="submenu-toggle">
             <i class="glyphicon glyphicon-th-list"></i>
-            <span>Registrer utlevering</span>
+            <span>Registrer Utlevering</span>
         </a>
     </li>
     <li>

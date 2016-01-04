@@ -6,13 +6,13 @@ page_require_level(3);
 
 
 $sale = find_by_id('sales', (int)$_GET['id']);
+$mac = (remove_junk($sale['mac']));
 if (!$sale) {
     $session->msg("d", "Missing product id.");
     redirect('sales.php');
 }
 
 $product = find_by_id('products', $sale['product_id']);
-
 
 if (isset($_POST['update_sale'])) {
     $req_fields = array('title', 'quantity', 'price', 'total', 'date', 'custnr', 'comment');
@@ -25,11 +25,12 @@ if (isset($_POST['update_sale'])) {
         $custnr = $db->escape($_POST['custnr']);
         $comment = $db->escape($_POST['comment']);
         $s_date = date("Y-m-d", strtotime($date));
+        $s_mac = $db->escape($_POST['mac']);
 
         $qty_change = $s_qty - $sale['qty'];
 
         $sql = "UPDATE sales SET";
-        $sql .= " product_id= '{$p_id}',qty={$s_qty},price='{$s_total}',date='{$s_date}', custnr='{$custnr}', comment='{$comment}'";
+        $sql .= " product_id= '{$p_id}',qty={$s_qty},price='{$s_total}',date='{$s_date}', custnr='{$custnr}', comment='{$comment}', mac='{$s_mac}'";
         $sql .= " WHERE id ='{$sale['id']}'";
         $result = $db->query($sql);
 
@@ -81,6 +82,7 @@ include_once('layouts/header.php'); ?>
                     <th> Total</th>
                     <th> Dato</th>
                     <th> Kundenummer</th>
+                    <th> MAC </th>
                     <th> Kommentar</th>
                     </thead>
                     <tbody id="product_info">
@@ -105,6 +107,15 @@ include_once('layouts/header.php'); ?>
                             </td>
                             <td>
                                 <input type='number' class='form-control' name='custnr' value="<?php echo remove_junk($sale['custnr']); ?>" required>
+                            </td>
+                            <td>
+                                <?php
+                                if ($product['hasMAC'] > 0) {
+                                    echo("<input type='text' class='form-control' name='mac' maxlength='17' value='{$mac}' >");
+                                } else {
+                                    echo("<input type='text' class='form-control' name='mac' maxlength='17' value='{$mac}' readonly>");
+                                }
+                                ?>
                             </td>
                             <td>
                                 <textarea name="comment" rows="1" style="width: 100%"><?php echo remove_junk($sale['comment']); ?></textarea>

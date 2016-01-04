@@ -24,7 +24,7 @@ if ($isAdmin) {
 }
 ?>
 <script type="text/javascript" src="includes/jquery.js"></script>
-<script type="text/javascript" src="add_prod.js"></script>
+<script type="text/javascript" src="add_trade.js"></script>
 <div class="col-md-12">
     <div class="panel panel-default">
         <div class="panel-heading clearfix">
@@ -69,9 +69,10 @@ if ($isAdmin) {
                 </div>
                 <table class="table table-bordered">
                     <thead>
-                    <th style="width: 33%"> Produkt</th>
-                    <th style="width: 33%"> Pris</th>
-                    <th style="width: 33%"> Antall</th>
+                    <th style="width: 25%"> Produkt</th>
+                    <th style="width: 25%"> Antall</th>
+                    <th style="width: 25%"> Årsak</th>
+                    <th style="width: 25%"> MAC</th>
                     </thead>
 
                     <tbody id="result">

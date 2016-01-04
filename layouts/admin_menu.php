@@ -37,7 +37,7 @@
             <span>Produkter</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="product.php">Administrer produkter</a> </li>
+            <li><a href="product.php">Administrer Produkter</a> </li>
             <li><a href="add_product.php">Legg til Produkt</a> </li>
         </ul>
     </li>
@@ -50,12 +50,12 @@
     <li>
         <a href="#" class="submenu-toggle">
             <i class="glyphicon glyphicon-th-list"></i>
-            <span>Salg</span>
+            <span>Utlevering</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="sales.php">Alle Salg</a> </li>
-            <li><a href="../admin_sales.php">Mine Salg</a> </li>
-            <li><a href="../new_sale.php">Registrer utlevering</a> </li>
+            <li><a href="../new_sale.php">Registrer Utlevering</a> </li>
+            <li><a href="sales.php">Alle Utleveringer</a> </li>
+            <li><a href="../admin_sales.php">Mine Utleveringer</a> </li>
         </ul>
     </li>
     <li>
@@ -64,19 +64,20 @@
             <span>Returer</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="trades.php">Alle returer</a> </li>
             <li><a href="../trade.php">Registrer Retur</a></li>
+            <li><a href="trades.php">Alle Returer</a> </li>
         </ul>
     </li>
     <li>
         <a href="#" class="submenu-toggle">
             <i class="glyphicon glyphicon-signal"></i>
-            <span>Sales Report</span>
+            <span>Rapporter</span>
         </a>
         <ul class="nav submenu">
             <li><a href="sales_report.php">Salgsrapport</a></li>
-            <li><a href="monthly_sales.php">Monthly sales</a></li>
-            <li><a href="daily_sales.php">Daily sales</a> </li>
+            <li><a href="trades_report.php">Returrapport</a></li>
+            <li><a href="monthly_sales.php">Salg denne måneden</a></li>
+            <li><a href="daily_sales.php">Daglige salg</a></li>
         </ul>
     </li>
 </ul>

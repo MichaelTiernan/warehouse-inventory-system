@@ -18,6 +18,8 @@ if (isset($_POST['add_product'])) {
         $p_buy = remove_junk($db->escape($_POST['buying-price']));
         $p_sale = remove_junk($db->escape($_POST['saleing-price']));
         $p_number = remove_junk($db->escape($_POST['product-number']));
+        $hasMAC = remove_junk($db->escape($_POST['hasMac']));
+
         if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
             $media_id = '0';
         } else {
@@ -25,9 +27,9 @@ if (isset($_POST['add_product'])) {
         }
         $date = make_date();
         $query = "INSERT INTO products (";
-        $query .= " name, quantity, ks_storage, sale_price, categorie_id, media_id, product_number, date, buy_price";
+        $query .= " name, quantity, ks_storage, sale_price, categorie_id, media_id, product_number, date, buy_price, hasMAC";
         $query .= ") VALUES (";
-        $query .= " '{$p_name}', '{$p_qty}', '{$p_ksStorage}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$p_number}', '{$date}', '{$p_buy}'";
+        $query .= " '{$p_name}', '{$p_qty}', '{$p_ksStorage}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$p_number}', '{$date}', '{$p_buy}', '{$hasMAC}'";
         $query .= ")";
         $query .= " ON DUPLICATE KEY UPDATE name='{$p_name}'";
         if ($db->query($query)) {
@@ -140,6 +142,13 @@ if (isset($_POST['add_product'])) {
                                       </span>
                                         <input type="number" class="form-control" name="saleing-price" placeholder="Pris">
                                     </div>
+                                </div>
+
+                                <div class="col-md-4" style="padding-top: 15px">
+                                    <select class="form-control" name="hasMac">
+                                        <option value="0">Ingen MAC</option>
+                                        <option value="1">Har MAC</option>
+                                    </select>
                                 </div>
 
                             </div>

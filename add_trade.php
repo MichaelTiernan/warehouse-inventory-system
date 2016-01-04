@@ -15,13 +15,15 @@ if (isset($_POST['custnr'])) {
             $date = $db->escape($_POST['date']);
             $custnr = $db->escape($_POST['custnr']);
             $comment = $db->escape($_POST['comment']);
+            $returnCat = $db->escape($_POST['returnCategory']);
             $s_date = make_date();
             $s_userID = $_SESSION['user_id'];
+            $s_mac = $db->escape($_POST['mac'][$i]);
 
             $sql = "INSERT INTO trade (";
-            $sql .= " product_id, qty, price, date, custnr, comment, FK_userID";
+            $sql .= " product_id, qty, price, date, custnr, comment, FK_userID, FK_returnCategory, mac";
             $sql .= ") VALUES (";
-            $sql .= "'{$p_id}', '{$s_qty}', '{$s_total}', '{$s_date}', '{$custnr}', '{$comment}','$s_userID'";
+            $sql .= "'{$p_id}', '{$s_qty}', '{$s_total}', '{$s_date}', '{$custnr}', '{$comment}','{$s_userID}', '{$returnCat}', '{$s_mac}'";
             $sql .= ")";
 
             if ($s_qty > 0) {
