@@ -34,7 +34,7 @@ if (isset($_POST['product'])) {
         }
         $query = "UPDATE products SET";
         $query .= " name ='{$p_name}', quantity ='{$p_qty}',";
-        $query .= " ks_storage ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}',media_id='{$media_id}', product_number='{$p_product_code}', buy_price='{$p_buy}', hasMAC='{$hasMAC}'";
+        $query .= " ks_storage ='{$p_ks_storage}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}',media_id='{$media_id}', product_number='{$p_product_code}', buy_price='{$p_buy}', hasMAC='{$hasMAC}'";
         $query .= " WHERE id ='{$product['id']}'";
         $result = $db->query($query);
         if ($result && $db->affected_rows() === 1) {
