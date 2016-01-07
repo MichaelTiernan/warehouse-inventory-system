@@ -12,6 +12,7 @@
         </a>
         <ul class="nav submenu">
             <li><a href="storage.php">Lagerstatus</a></li>
+            <li><a href="ks_storage.php">KS-Lagerpåfyll</a></li>
             <li><a href="storage_log.php">Lagerlogg</a></li>
         </ul>
     </li>
@@ -53,7 +54,8 @@
             <span>Utlevering</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="../new_sale.php">Registrer Utlevering</a> </li>
+            <li><a href="../new_sale.php">Registrer Utlevering KS-Lager</a> </li>
+            <li><a href="../new_sale_mainstorage.php">Registrer Utlevering Hovedlager</a> </li>
             <li><a href="sales.php">Alle Utleveringer</a> </li>
             <li><a href="../admin_sales.php">Mine Utleveringer</a> </li>
         </ul>
