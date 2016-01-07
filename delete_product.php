@@ -9,8 +9,7 @@
     $session->msg("d","Missing Product id.");
     redirect('product.php');
   }
-?>
-<?php
+
   $delete_id = delete_by_id('products',(int)$product['id']);
   if($delete_id){
       $session->msg("s","Products deleted.");
