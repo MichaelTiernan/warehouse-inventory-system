@@ -90,7 +90,7 @@ if (isset($_POST['storage'])) {
                                 ?>
                                 <tr class="text-center">
                                     <td><?php echo first_character($storage['name']); ?></td>
-                                    <td><input type='number' class='form-control' name='hovedlager[]' value='$hovedlager_value' required>
+                                    <td><input type='number' class='form-control' name='hovedlager[]' value="<?php echo($hovedlager_value); ?>" required></td>
                                     <td>
                                         <input type="number" class="form-control" name="ks-lager[]" value="<?php echo($storage['ks_storage']); ?>" required>
                                         <input type="number" name="id[]" value="<?php echo($storageID) ?>" hidden>
