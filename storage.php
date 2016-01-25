@@ -4,7 +4,7 @@ require_once('includes/load.php');
 include_once('layouts/header.php');
 
 // Checking userlevel
-page_require_level(1);
+page_require_level(2);
 
 //Show only own sales, unless userlevel is admin
 if (get_userlevel() == 1) {
@@ -90,12 +90,7 @@ if (isset($_POST['storage'])) {
                                 ?>
                                 <tr class="text-center">
                                     <td><?php echo first_character($storage['name']); ?></td>
-                                    <?php if ($is_admin) {
-                                        echo("<td><input type='number' class='form-control' name='hovedlager[]' value='$hovedlager_value' required>");
-                                    } else {
-                                        echo("<td><input type='number' class='form-control' name='hovedlager[]' value='$hovedlager_value' readonly>");
-                                    }
-                                    ?>
+                                    <td><input type='number' class='form-control' name='hovedlager[]' value='$hovedlager_value' required>
                                     <td>
                                         <input type="number" class="form-control" name="ks-lager[]" value="<?php echo($storage['ks_storage']); ?>" required>
                                         <input type="number" name="id[]" value="<?php echo($storageID) ?>" hidden>

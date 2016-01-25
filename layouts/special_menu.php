@@ -6,10 +6,14 @@
         </a>
     </li>
     <li>
-        <a href="ks_storage.php">
+        <a href="#" class="submenu-toggle">
             <i class="glyphicon glyphicon-signal"></i>
-            <span>Lagerpåfyll</span>
+            <span>Lager</span>
         </a>
+        <ul class="nav submenu">
+            <li><a href="storage.php">Lagerstatus</a></li>
+            <li><a href="ks_storage.php">KS-Lagerpåfyll</a></li>
+        </ul>
     </li>
     <li>
         <a href="#" class="submenu-toggle">
