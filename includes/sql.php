@@ -366,7 +366,7 @@ function find_all_trades()
     $sql .= " FROM trade t";
     $sql .= " LEFT JOIN products p ON t.product_id = p.id";
     $sql .= " LEFT JOIN users u ON t.FK_userID = u.id";
-    $sql .= " LEFT JOIN returncategory r on FK_returnCategory = r.id";
+    $sql .= " LEFT JOIN returnCategory r on FK_returnCategory = r.id";
     $sql .= " ORDER BY t.date DESC, id DESC LIMIT 100";
     return find_by_sql($sql);
 }
@@ -378,7 +378,7 @@ function find_all_user_trades()
     $sql = "SELECT t.id, t.qty, t.price, t.date, p.name, t.comment, t.custnr, r.categoryName, t.mac";
     $sql .= " FROM trade t";
     $sql .= " LEFT JOIN products p ON t.product_id = p.id";
-    $sql .= " LEFT JOIN returncategory r on FK_returnCategory = r.id";
+    $sql .= " LEFT JOIN returnCategory r on FK_returnCategory = r.id";
     $sql .= " WHERE t.FK_userID = '$userID'";
     $sql .= " ORDER BY t.date DESC, id DESC LIMIT 100";
     return find_by_sql($sql);

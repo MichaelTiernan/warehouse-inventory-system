@@ -18,4 +18,3 @@
       $session->msg("d","Products deletion failed.");
       redirect('product.php');
   }
-?>
