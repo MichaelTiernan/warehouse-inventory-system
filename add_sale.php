@@ -29,11 +29,7 @@ if (isset($_POST['custnr'])) {
 
             if ($s_qty > 0) {
                 if ($db->query($sql)) {
-                    if ($productCategory['categorie_id'] == 4) {
-                        update_bedrift_qty($s_qty, $p_id);
-                    } else {
-                        update_product_qty($s_qty, $p_id);
-                    }
+                    update_product_qty($s_qty, $p_id);
 //                    $session->msg('s', "Sale added. ");
                 } else {
 //                    $session->msg('d', ' Sorry failed to add!');
