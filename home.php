@@ -68,7 +68,6 @@ $storageStatus = storage_status();
                                     <tr>
                                         <th>Produkt</th>
                                         <th>Dato</th>
-                                        <th>Pris</th>
                                         <th>Bruker</th>
                                     </tr>
                                     </thead>
@@ -77,10 +76,8 @@ $storageStatus = storage_status();
                                         <tr>
                                             <td><?php echo remove_junk(first_character($recent_sale['name'])); ?> </td>
                                             <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
-                                            <td><?php echo remove_junk(first_character($recent_sale['price'])); ?>,-</td>
                                             <td><?php echo remove_junk(first_character($recent_sale['username'])); ?></td>
                                         </tr>
-
                                     <?php endforeach; ?>
                                     </tbody>
                                 </table>

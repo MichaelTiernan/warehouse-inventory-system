@@ -304,6 +304,16 @@ function update_bedrift_qty($qty, $p_id)
     return ($db->affected_rows() === 1 ? true : false);
 }
 
+function update_entre_qty($qty, $p_id)
+{
+    global $db;
+    $qty = (int)$qty;
+    $id = (int)$p_id;
+    $sql = "UPDATE products SET m_storage = m_storage -'{$qty}' WHERE id = '{$id}'";
+    $result = $db->query($sql);
+    return ($db->affected_rows() === 1 ? true : false);
+}
+
 /*--------------------------------------------------------------*/
 /* Function for Display Recent product Added
 /*--------------------------------------------------------------*/
@@ -346,12 +356,36 @@ function find_all_sale()
     return find_by_sql($sql);
 }
 
+function find_all_entre_sale()
+{
+    global $db;
+    $sql = "SELECT s.id, s.qty, s.price, s.date, p.name, s.comment, s.custnr, u.username, s.mac";
+    $sql .= " FROM entre_sales s";
+    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+    $sql .= " LEFT JOIN users u ON s.FK_userID = u.id";
+    $sql .= " ORDER BY s.date DESC, id DESC LIMIT 100";
+    return find_by_sql($sql);
+}
+
 function find_all_user_sales()
 {
     $userID = $_SESSION['user_id'];
 
     $sql = "SELECT s.id,s.qty,s.price,s.date,p.name, s.comment, s.custnr, s.mac";
     $sql .= " FROM sales s";
+    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+    $sql .= " WHERE s.FK_userID = '$userID'";
+    $sql .= " ORDER BY s.date DESC, id DESC LIMIT 100";
+
+    return find_by_sql($sql);
+}
+
+function find_all_entre_user_sales()
+{
+    $userID = $_SESSION['user_id'];
+
+    $sql = "SELECT s.id,s.qty,s.price,s.date,p.name, s.comment, s.custnr, s.mac";
+    $sql .= " FROM entre_sales s";
     $sql .= " LEFT JOIN products p ON s.product_id = p.id";
     $sql .= " WHERE s.FK_userID = '$userID'";
     $sql .= " ORDER BY s.date DESC, id DESC LIMIT 100";
@@ -471,7 +505,7 @@ function monthlySales($year)
 /* Return storagestatus */
 function storage_status()
 {
-    $sql = "SELECT name, ks_storage, quantity, id FROM products";
+    $sql = "SELECT name, ks_storage, quantity, m_storage, id FROM products";
     return find_by_sql($sql);
 }
 
@@ -518,6 +552,13 @@ function storage_fix_deletion($id, $qty)
 {
     global $db;
     $sql = "UPDATE `products` SET ks_storage = (ks_storage + {$qty}) WHERE id = {$id}";
+    return find_by_sql($sql);
+}
+
+function storage_fix_entre_deletion($id, $qty)
+{
+    global $db;
+    $sql = "UPDATE `products` SET m_storage = (m_storage + {$qty}) WHERE id = {$id}";
     return find_by_sql($sql);
 }
 

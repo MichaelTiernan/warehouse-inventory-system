@@ -13,7 +13,7 @@
       <form method="post" action="auth.php" class="clearfix">
         <div class="form-group">
               <label for="username" class="control-label">Username</label>
-              <input type="name" class="form-control" name="username" placeholder="Username">
+              <input type="name" class="form-control" name="username" placeholder="Username" autofocus>
         </div>
         <div class="form-group">
             <label for="Password" class="control-label">Password</label>

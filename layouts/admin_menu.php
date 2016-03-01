@@ -1,6 +1,6 @@
 <ul>
     <li>
-        <a href="../home.php">
+        <a href="home.php">
             <i class="glyphicon glyphicon-home"></i>
             <span>Dashboard</span>
         </a>
@@ -13,6 +13,7 @@
         <ul class="nav submenu">
             <li><a href="storage.php">Lagerstatus</a></li>
             <li><a href="ks_storage.php">KS-Lagerpåfyll</a></li>
+            <li><a href="entre_storage.php">Montør Lagerpåfyll</a></li>
             <li><a href="storage_log.php">Lagerlogg</a></li>
         </ul>
     </li>
@@ -27,7 +28,7 @@
         </ul>
     </li>
     <li>
-        <a href="../categorie.php">
+        <a href="categorie.php">
             <i class="glyphicon glyphicon-indent-left"></i>
             <span>Kategorier</span>
         </a>
@@ -43,7 +44,7 @@
         </ul>
     </li>
     <li>
-        <a href="../media.php">
+        <a href="media.php">
             <i class="glyphicon glyphicon-picture"></i>
             <span>Media</span>
         </a>
@@ -54,10 +55,12 @@
             <span>Utlevering</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="../new_sale.php">Registrer Utlevering KS-Lager</a> </li>
-            <li><a href="../new_sale_mainstorage.php">Registrer Utlevering Hovedlager</a> </li>
+            <li><a href="new_sale.php">Registrer Utlevering KS-Lager</a> </li>
+            <li><a href="new_sale_mainstorage.php">Registrer Utlevering Hovedlager</a> </li>
+            <li><a href="entre_sale.php">Registrer Utlevering Montørlager</a> </li>
             <li><a href="sales.php">Alle Utleveringer</a> </li>
-            <li><a href="../admin_sales.php">Mine Utleveringer</a> </li>
+            <li><a href="admin_sales.php">Mine Utleveringer</a> </li>
+            <li><a href="entre_sales.php">Montørutleveringer</a> </li>
         </ul>
     </li>
     <li>
@@ -66,7 +69,7 @@
             <span>Returer</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="../trade.php">Registrer Retur</a></li>
+            <li><a href="trade.php">Registrer Retur</a></li>
             <li><a href="trades.php">Alle Returer</a> </li>
         </ul>
     </li>

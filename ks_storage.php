@@ -36,8 +36,6 @@ if (isset($_POST['ks-storage'])) {
             $refillSum = $storageProd[$i]['ks_storage'] + $_POST['refill'][$i];
             $hovedSum = $storageProd[$i]['quantity'] - $_POST['refill'][$i];
 
-            echo "refill $refillSum  hovedsum $hovedSum  hlager {$storageProd[$i]['quantity']}";
-
             $query = "UPDATE products SET ks_storage = {$refillSum}, quantity = {$hovedSum} WHERE id = {$_POST['id'][$i]}";
             $result = $db->query($query);
             storage_log($hovedSum, $refillSum, $_POST['id'][$i]);
@@ -69,7 +67,7 @@ if (isset($_POST['ks-storage'])) {
                 <div class="panel-heading">
                     <strong>
                         <span class="glyphicon glyphicon-th"></span>
-                        <span>Lagerstatus</span>
+                        <span>Lagerstatus KS-lager</span>
                     </strong>
                 </div>
                 <div class="panel-body">

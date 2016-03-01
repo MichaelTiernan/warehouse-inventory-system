@@ -1,10 +1,10 @@
 <?php
-$page_title = 'Lagerstatus';
+$page_title = 'Montør-lager';
 require_once('includes/load.php');
 include_once('layouts/header.php');
 
 // Checking userlevel
-page_require_level(2);
+page_require_level(5);
 
 //Show only own sales, unless userlevel is admin
 if (get_userlevel() == 1) {
@@ -23,28 +23,22 @@ foreach ($storageStatus as $stg) {
     array_push($storageProd, $stg);
 }
 
-if (isset($_POST['storage'])) {
-    $max = count($_POST['hovedlager']);
+
+if (isset($_POST['m_storage'])) {
+    $max = count($_POST['id']);
 
     for ($i = 0; $i < $max; $i++) {
-        $I_hovedlager = $_POST["hovedlager"][$i];
-        $I_kslager = $_POST["ks-lager"][$i];
-        $I_m_storage = $_POST["m_storage"][$i];
+        $refillSum = 0;
+        $hovedSum = 0;
 
 
-        $changeKS = $storageProd[$i]['ks_storage'] != $I_kslager;
-        $changeH = $storageProd[$i]['quantity'] != $I_hovedlager;
-        $changeM = $storageProd[$i]['m_storage'] != $I_m_storage;
+        if ($_POST['refill'][$i] > 0) {
+            $refillSum = $storageProd[$i]['m_storage'] + $_POST['refill'][$i];
+            $hovedSum = $storageProd[$i]['quantity'] - $_POST['refill'][$i];
 
-
-        $KS_qty = $I_kslager - $storageProd[$i]['ks_storage'];
-        $H_qty = $I_hovedlager - $storageProd[$i]['quantity'];
-        $M_qty = $I_m_storage - $storageProd[$i]['m_storage'];
-
-        if ($changeKS || $changeH || $changeM) {
-            $query = "UPDATE products SET ks_storage = '{$I_kslager}', quantity = '{$I_hovedlager}', m_storage = '{$I_m_storage}', last_edited_by = '{$_SESSION['user_id']}' WHERE id = '{$_POST['id'][$i]}'";
+            $query = "UPDATE products SET m_storage = {$refillSum}, quantity = {$hovedSum} WHERE id = {$_POST['id'][$i]}";
             $result = $db->query($query);
-            storage_log($H_qty, $KS_qty, $_POST['id'][$i]);
+            storage_log($hovedSum, $refillSum, $_POST['id'][$i]);
 
             if ($result && $db->affected_rows() === 1) {
                 $dbupdate = true;
@@ -60,10 +54,12 @@ if (isset($_POST['storage'])) {
         $session->msg('d', ' Sorry failed to update!');
 //        redirect('home.php', false);
     }
+
     $dbupdate = false;
 }
 
 ?>
+
 
     <div class="row">
         <div class="col-md-12">
@@ -71,7 +67,7 @@ if (isset($_POST['storage'])) {
                 <div class="panel-heading">
                     <strong>
                         <span class="glyphicon glyphicon-th"></span>
-                        <span>Lagerstatus</span>
+                        <span>Lagerstatus Montørlager</span>
                     </strong>
                 </div>
                 <div class="panel-body">
@@ -79,36 +75,33 @@ if (isset($_POST['storage'])) {
                         <table class="table table-striped table-bordered table-condensed">
                             <thead>
                             <tr>
-                                <th class="text-center" style="width: 20%">Produkt</th>
-                                <th class="text-center" style="width: 20%">Hovedlager</th>
-                                <th class="text-center" style="width: 20%">KS-lager</th>
-                                <th class="text-center" style="width: 20%">Montørlager</th>
+                                <th class="text-center" style="width: 25%">Produkt</th>
+                                <th class="text-center" style="width: 10%">Hovedlager</th>
+                                <th class="text-center" style="width: 10%">Montørlager</th>
+                                <th class="text-center" style="width: 25%">Påfyll</th>
                             </tr>
                             </thead>
                             <tbody>
 
                             <?php foreach ($storageStatus as $storage):
                                 $storageID = $storage['id'];
-                                $ks_storage_value = $storage['ks_storage'];
+                                $ks_storage_value = $storage['m_storage'];
                                 $hovedlager_value = $storage['quantity'];
-                                $m_storage_value = $storage['m_storage'];
                                 ?>
                                 <tr class="text-center">
-                                    <td><?php echo first_character($storage['name']); ?></td>
-                                    <td><input type='number' class='form-control' name='hovedlager[]' value="<?php echo($hovedlager_value); ?>" required></td>
                                     <td>
-                                        <input type="number" class="form-control" name="ks-lager[]" value="<?php echo($storage['ks_storage']); ?>" required>
+                                        <?php echo first_character($storage['name']); ?>
                                         <input type="number" name="id[]" value="<?php echo($storageID) ?>" hidden>
                                     </td>
-                                    <td>
-                                        <input type='number' class='form-control' name='m_storage[]' value="<?php echo($m_storage_value); ?>" required>
-                                    </td>
+                                    <td><?php echo($storage['quantity']); ?></td>
+                                    <td><?php echo($storage['m_storage']); ?></td>
+                                    <td><input class="form-control" name="refill[]" type="number" min="0" placeholder="Antall lagt til på lager"></td>
                                 </tr>
                             <?php endforeach; ?>
                             <tr>
                                 <td colspan="3"></td>
                                 <td>
-                                    <button type="submit" name="storage" class="btn btn-success">Oppdater lagerstatus</button>
+                                    <button type="submit" name="m_storage" class="btn btn-success">Fullfør</button>
                                 </td>
                             </tr>
                             <tbody>
@@ -118,5 +111,6 @@ if (isset($_POST['storage'])) {
             </div>
         </div>
     </div>
+
 
 <?php include_once('layouts/footer.php'); ?>

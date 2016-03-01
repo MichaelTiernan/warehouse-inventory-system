@@ -21,7 +21,7 @@ if (isset($_POST['custnr'])) {
 
             $productCategory = find_by_id('products', $p_id);
 
-            $sql = "INSERT INTO sales (";
+            $sql = "INSERT INTO entre_sales (";
             $sql .= " product_id, qty, price, date, custnr, comment, FK_userID, mac";
             $sql .= ") VALUES (";
             $sql .= "'{$p_id}', '{$s_qty}', '{$s_total}', '{$s_date}', '{$custnr}', '{$comment}','$s_userID', '{$s_mac}'";
@@ -29,19 +29,19 @@ if (isset($_POST['custnr'])) {
 
             if ($s_qty > 0) {
                 if ($db->query($sql)) {
-                    update_bedrift_qty($s_qty, $p_id);
+                    update_entre_qty($s_qty, $p_id);
 //                    $session->msg('s', "Sale added. ");
                 } else {
 //                    $session->msg('d', ' Sorry failed to add!');
                 }
             }
         }
-        header('Location: new_sale_mainstorage.php');
+        header('Location: entre_sale.php');
 //        $session->msg('s', "Sale added. ");
         exit();
 
     } else {
         $session->msg("d", $errors);
-        redirect('new_sale.php', false);
+        redirect('entre_sale.php', false);
     }
 }

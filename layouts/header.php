@@ -68,6 +68,8 @@
             require('user_menu.php');
         } elseif ($user['user_level'] === '4') {
             require('resepsjon_menu.php');
+        } elseif ($user['user_level'] === '5') {
+            require('entre_menu.php');
         }
         ob_start()
         ?>
