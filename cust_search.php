@@ -7,14 +7,7 @@ page_require_level(3);
 
 //Show only own sales, unless userlevel is admin
 if (isset($_POST['custnr'])) {
-    echo 'banana';
-//    echo var_dump($_POST['custnr']);
     $sales = search_custnr($_POST['custnr']);
-    if (get_userlevel() == 1) {
-        $sales = search_custnr($_POST['custnr']);
-    } else {
-        $sales = find_all_user_sales();
-    }
 }
 
 include_once('layouts/header.php'); ?>
@@ -28,28 +21,26 @@ include_once('layouts/header.php'); ?>
                     <span>Søk</span>
                 </strong>
             </div>
-
-            <div class="panel-body">
                 <div class="col-md-2">
                     <form method="post">
                         <div class="form-group">
-                            <input type="number" name="custnr" placeholder="Kundenummer">
+                            <input type="number" name="custnr" placeholder="Kundenummer" style="margin-top: 10px">
                             <div class="pull-right">
-                                <button type="submit" name="storage" class="btn btn-primary">Søk</button>
+                                <button type="submit" name="storage" class="btn btn-primary" style="margin-top: 5px">Søk</button>
                             </div>
                         </div>
                     </form>
                 </div>
+            <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <table class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
                                     <th class="text-center" style="width: 50px;">#</th>
-                                    <th> Produkt</th>
+                                    <th class="text-center"> Produkt</th>
                                     <th class="text-center" style="width: 5%;"> Antall</th>
-                                    <th class="text-center" style="width: 5%;"> Total</th>
                                     <th class="text-center" style="width: 5%;"> Dato</th>
                                     <?php if (get_userlevel() == 1) {
                                         echo("<th class='text-center'> Bruker </th>");
@@ -60,13 +51,11 @@ include_once('layouts/header.php'); ?>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tbody>
                                 <?php if (isset($_POST['custnr'])): foreach ($sales as $sale): ?>
                                     <tr>
                                         <td class="text-center"><?php echo count_id(); ?></td>
                                         <td><?php echo remove_junk($sale['name']); ?></td>
                                         <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
-                                        <td class="text-center"><?php echo remove_junk($sale['price']); ?>,-</td>
                                         <td class="text-center"><?php echo $sale['date']; ?></td>
                                         <?php if (get_userlevel() == 1) {
                                             echo("<td class='text-center'>{$sale['username']}</td> ");
