@@ -569,6 +569,7 @@ function sales_search($custnr)
     return find_by_sql($sql);
 }
 
+
 function storage_log($qty, $ks, $prod)
 {
     global $db;
@@ -576,10 +577,38 @@ function storage_log($qty, $ks, $prod)
     $db->query($sql);
 }
 
+function storage_log_ext($hoved, $ks, $mon, $id)
+{
+    global $db;
+    $sql = "INSERT INTO lagerlogging (diff_hoved, diff_ks, diff_m, hovedlager, kslager, monlager, FK_prod, FK_userID) VALUES ({$hoved},{$ks},{$mon},(SELECT `quantity` FROM products WHERE id = {$id}), (SELECT `ks_storage` FROM products WHERE id = {$id}), (SELECT `m_storage` FROM products WHERE id = {$id}), {$id}, {$_SESSION['user_id']})";
+    $db->query($sql);
+}
+
+function storage_log_ext_ks($ks, $id)
+{
+    global $db;
+    $sql = "INSERT INTO lagerlogging (diff_hoved, diff_ks, diff_m, hovedlager, kslager, monlager, FK_prod, FK_userID) VALUES (0,{$ks},0,(SELECT `quantity` FROM products WHERE id = {$id}), (SELECT `ks_storage` FROM products WHERE id = {$id}), (SELECT `m_storage` FROM products WHERE id = {$id}), {$id}, {$_SESSION['user_id']})";
+    $db->query($sql);
+}
+
+function storage_log_ext_mon($mon, $id)
+{
+    global $db;
+    $sql = "INSERT INTO lagerlogging (diff_hoved, diff_ks, diff_m, hovedlager, kslager, monlager, FK_prod, FK_userID) VALUES (0, 0, {$mon},(SELECT `quantity` FROM products WHERE id = {$id}), (SELECT `ks_storage` FROM products WHERE id = {$id}), (SELECT `m_storage` FROM products WHERE id = {$id}), {$id}, {$_SESSION['user_id']})";
+    $db->query($sql);
+}
+
 function get_log()
 {
     global $db;
     $sql = "SELECT p.name, l.ks_storage, l.quantity, l.updated, u.username FROM logg l LEFT JOIN products p ON l.productID = p.id JOIN users u ON l.userID = u.id ORDER BY l.id DESC LIMIT 100";
+    return find_by_sql($sql);
+}
+
+function get_log_ext()
+{
+    global $db;
+    $sql = "SELECT p.name, l.diff_hoved, l.diff_ks, l.diff_m, l.timecreated, l.hovedlager, l.kslager, l.monlager, u.username FROM lagerlogging l LEFT JOIN products p ON l.FK_prod = p.id JOIN users u ON l.FK_userID = u.id ORDER BY l.id DESC LIMIT 100";
     return find_by_sql($sql);
 }
 

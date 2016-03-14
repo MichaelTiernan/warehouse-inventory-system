@@ -38,7 +38,7 @@ if (isset($_POST['m_storage'])) {
 
             $query = "UPDATE products SET m_storage = {$refillSum}, quantity = {$hovedSum} WHERE id = {$_POST['id'][$i]}";
             $result = $db->query($query);
-            storage_log($hovedSum, $refillSum, $_POST['id'][$i]);
+            storage_log_ext_mon($_POST['refill'][$i], $_POST['id'][$i]);
 
             if ($result && $db->affected_rows() === 1) {
                 $dbupdate = true;

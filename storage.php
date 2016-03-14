@@ -44,7 +44,8 @@ if (isset($_POST['storage'])) {
         if ($changeKS || $changeH || $changeM) {
             $query = "UPDATE products SET ks_storage = '{$I_kslager}', quantity = '{$I_hovedlager}', m_storage = '{$I_m_storage}', last_edited_by = '{$_SESSION['user_id']}' WHERE id = '{$_POST['id'][$i]}'";
             $result = $db->query($query);
-            storage_log($H_qty, $KS_qty, $_POST['id'][$i]);
+            storage_log_ext($H_qty, $KS_qty, $M_qty, $_POST['id'][$i]);
+
 
             if ($result && $db->affected_rows() === 1) {
                 $dbupdate = true;

@@ -38,7 +38,7 @@ if (isset($_POST['ks-storage'])) {
 
             $query = "UPDATE products SET ks_storage = {$refillSum}, quantity = {$hovedSum} WHERE id = {$_POST['id'][$i]}";
             $result = $db->query($query);
-            storage_log($hovedSum, $refillSum, $_POST['id'][$i]);
+            storage_log_ext_ks($_POST['refill'][$i], $_POST['id'][$i]);
 
             if ($result && $db->affected_rows() === 1) {
                 $dbupdate = true;
@@ -57,10 +57,7 @@ if (isset($_POST['ks-storage'])) {
 
     $dbupdate = false;
 }
-
 ?>
-
-
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">

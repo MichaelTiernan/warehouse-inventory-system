@@ -14,7 +14,18 @@
             <li><a href="storage.php">Lagerstatus</a></li>
             <li><a href="ks_storage.php">KS-Lagerpåfyll</a></li>
             <li><a href="entre_storage.php">Montør Lagerpåfyll</a></li>
-            <li><a href="storage_log.php">Lagerlogg</a></li>
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="submenu-toggle">
+            <i class="glyphicon glyphicon-signal"></i>
+            <span>Lagerlogger</span>
+        </a>
+        <ul class="nav submenu">
+            <li><a href="storage_log_main.php">Hovedlager</a></li>
+            <li><a href="storage_log_ks.php">KS-lager</a></li>
+            <li><a href="storage_log_mon.php">Montørlager</a></li>
+            <li><a href="storage_log.php">Lagerlogg-historikk</a></li>
         </ul>
     </li>
     <li>
