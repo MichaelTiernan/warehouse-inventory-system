@@ -541,9 +541,10 @@ function search_custnr($cust)
 {
     global $db;
     $sql = "SELECT s.id, s.qty, s.price, s.date, p.name, s.comment, s.custnr, u.username";
-    $sql .= " FROM sales s WHERE custnr = {$cust}";
+    $sql .= " FROM sales s ";
     $sql .= " LEFT JOIN products p ON s.product_id = p.id";
     $sql .= " LEFT JOIN users u ON s.FK_userID = u.id";
+    $sql .= " WHERE custnr LIKE '%{$cust}%'";
     $sql .= " ORDER BY s.date DESC, id DESC LIMIT 50";
     return find_by_sql($sql);
 }

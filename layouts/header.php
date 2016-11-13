@@ -17,7 +17,7 @@
 <body>
 <?php if ($session->isUserLoggedIn(true)): ?>
     <header id="header">
-        <div class="logo pull-left"><img src="./uploads/logo.jpg" style="height: 50px"> Tafjord Marked</div>
+        <div class="logo pull-left"><img src="./uploads/TafjordLogo.png" style="width: 230px"></div>
         <div class="header-content">
             <div class="header-date pull-left">
                 <strong>

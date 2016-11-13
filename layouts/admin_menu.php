@@ -25,7 +25,6 @@
             <li><a href="storage_log_main.php">Hovedlager</a></li>
             <li><a href="storage_log_ks.php">KS-lager</a></li>
             <li><a href="storage_log_mon.php">Montørlager</a></li>
-            <li><a href="storage_log.php">Lagerlogg-historikk</a></li>
         </ul>
     </li>
     <li>
@@ -34,8 +33,8 @@
             <span>Brukere</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="group.php">Brukergrupper</a> </li>
-            <li><a href="users.php">Brukerkontoer</a> </li>
+            <li><a href="group.php">Brukergrupper</a></li>
+            <li><a href="users.php">Brukerkontoer</a></li>
         </ul>
     </li>
     <li>
@@ -50,8 +49,8 @@
             <span>Produkter</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="product.php">Administrer Produkter</a> </li>
-            <li><a href="add_product.php">Legg til Produkt</a> </li>
+            <li><a href="product.php">Administrer Produkter</a></li>
+            <li><a href="add_product.php">Legg til Produkt</a></li>
         </ul>
     </li>
     <li>
@@ -66,12 +65,12 @@
             <span>Utlevering</span>
         </a>
         <ul class="nav submenu">
-            <li><a href="new_sale.php">Registrer Utlevering KS-Lager</a> </li>
-            <li><a href="new_sale_mainstorage.php">Registrer Utlevering Hovedlager</a> </li>
-            <li><a href="entre_sale.php">Registrer Utlevering Montørlager</a> </li>
-            <li><a href="sales.php">Alle Utleveringer</a> </li>
-            <li><a href="admin_sales.php">Mine Utleveringer</a> </li>
-            <li><a href="entre_sales.php">Montørutleveringer</a> </li>
+            <li><a href="new_sale.php">Registrer Utlevering KS-Lager</a></li>
+            <li><a href="new_sale_mainstorage.php">Registrer Utlevering Hovedlager</a></li>
+            <li><a href="entre_sale.php">Registrer Utlevering Montørlager</a></li>
+            <li><a href="sales.php">Alle Utleveringer</a></li>
+            <li><a href="admin_sales.php">Mine Utleveringer</a></li>
+            <li><a href="entre_sales.php">Montørutleveringer</a></li>
         </ul>
     </li>
     <li>
@@ -81,7 +80,7 @@
         </a>
         <ul class="nav submenu">
             <li><a href="trade.php">Registrer Retur</a></li>
-            <li><a href="trades.php">Alle Returer</a> </li>
+            <li><a href="trades.php">Alle Returer</a></li>
         </ul>
     </li>
     <li>
@@ -95,5 +94,11 @@
             <li><a href="monthly_sales.php">Salg denne måneden</a></li>
             <li><a href="daily_sales.php">Daglige salg</a></li>
         </ul>
+    </li>
+    <li>
+        <a href="cust_search.php">
+            <i class=" glyphicon glyphicon-search"></i>
+            <span>Søk</span>
+        </a>
     </li>
 </ul>

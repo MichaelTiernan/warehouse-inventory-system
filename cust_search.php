@@ -21,16 +21,14 @@ include_once('layouts/header.php'); ?>
                     <span>Søk</span>
                 </strong>
             </div>
-                <div class="col-md-2">
-                    <form method="post">
-                        <div class="form-group">
-                            <input type="number" name="custnr" placeholder="Kundenummer" style="margin-top: 10px">
-                            <div class="pull-right">
-                                <button type="submit" name="storage" class="btn btn-primary" style="margin-top: 5px">Søk</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <div class="col-md-2">
+                <form method="post">
+                    <div class="form-group">
+                        <input type="number" name="custnr" placeholder="Kundenummer" style="margin-top: 10px; margin-left: 15px">
+                        <button type="submit" name="storage" class="btn btn-primary" >Søk </button>
+                    </div>
+                </form>
+            </div>
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -61,7 +59,8 @@ include_once('layouts/header.php'); ?>
                                             echo("<td class='text-center'>{$sale['username']}</td> ");
                                         } ?>
                                         <td class="text-center"><?php echo $sale['custnr']; ?></td>
-                                        <td class="text-center" style="max-width: 250px"><?php echo $sale['comment']; ?></td>
+                                        <td class="text-center"
+                                            style="max-width: 250px"><?php echo $sale['comment']; ?></td>
                                         <td class="text-center">
                                             <div class="btn-group">
                                                 <a href="edit_sale.php?id=<?php echo (int)$sale['id']; ?>"

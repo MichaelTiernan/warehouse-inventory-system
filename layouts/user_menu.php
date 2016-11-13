@@ -29,4 +29,10 @@
             <span>Registrer Retur</span>
         </a>
     </li>
+    <li>
+        <a href="cust_search.php">
+            <i class=" glyphicon glyphicon-search"></i>
+            <span>Søk</span>
+        </a>
+    </li>
 </ul>

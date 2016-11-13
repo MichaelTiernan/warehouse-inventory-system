@@ -38,4 +38,10 @@
             <li><a href="trades.php">Alle Returer</a> </li>
         </ul>
     </li>
+    <li>
+        <a href="cust_search.php">
+            <i class=" glyphicon glyphicon-search"></i>
+            <span>Søk</span>
+        </a>
+    </li>
 </ul>
