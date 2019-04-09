@@ -1,12 +1,11 @@
 ## Oswa - inv
 
-
-![OSWA-INV v2 image](https://scontent-iad3-1.xx.fbcdn.net/v/t31.0-8/12045296_896994067005023_5505146103193104549_o.jpg?oh=4afd029c1486604d29f672d76becb8bc&oe=5921F70A " Warehouse inventory system ")
-#Warehouse inventory system
 - - - -
+Modified by Cory J. Potter aka CoreConduit Consulting Services 2018 - 2019
+cory@coreconduit.com
+The application was initially created by **Siamon Hasan**, using [php](http:php.net), [mysql](https://www.mysql.com) and [bootstrap](http://getbootstrap.com).
 
-The application was initially created by **Siamon Hasan**, useing [php](http:php.net), [mysql](https://www.mysql.com) and [bootstrap](http://getbootstrap.com).
-
+Original Download version with git (`git clone https://github.com/siamon123/warehouse-inventory-system.git`)
 
 OSWA-INV is a web based Inventory System, that will allow you to keep tracking of the quantity buying and selling price of the products existing in your warehouse or business. When creating a new products, you can set a quantity,buying and selling price.
 
@@ -19,7 +18,7 @@ If you find any bug, and a fix for that bug, please leave a comment on the githu
 ****
 
 
-1. Download the latest version with git (`git clone https://github.com/siamon123/warehouse-inventory-system.git`)
+1. Download the latest version with git (`git clone https://github.com/bitsandbots/inventory-system.git`)
 
 2. Import/load oswa_inv.sql into your mysql database. This should set up the basic structure of the database system.
 
@@ -38,11 +37,3 @@ If you find any bug, and a fix for that bug, please leave a comment on the githu
 6. Good luck!  
 
 - - - -
-
-## DON'T FORGET TO GIVE US FEEDBACK
-
-- - - -
-
-Like  [@OSWA](https://www.facebook.com/oswapp) on Facebook for more project.
-
-Don't forget to visit [oswapp.com](http://oswapp.com "OSWA")
