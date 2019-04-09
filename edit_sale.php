@@ -4,6 +4,8 @@
   // Checkin What level user has permission to view this page
    page_require_level(3);
 ?>
+
+
 <?php
 $sale = find_by_id('sales',(int)$_GET['id']);
 if(!$sale){
@@ -11,25 +13,67 @@ if(!$sale){
   redirect('sales.php');
 }
 ?>
+
 <?php $product = find_by_id('products',$sale['product_id']); ?>
+<?php $order = find_by_id('orders',$sale['order_id']); ?>
+
 <?php
 
   if(isset($_POST['update_sale'])){
-    $req_fields = array('title','quantity','price','total', 'date' );
+    $req_fields = array('title', 'order_id','quantity','price','total', 'date' );
     validate_fields($req_fields);
         if(empty($errors)){
+          $o_id      = $db->escape((int)$_POST['order_id']);
           $p_id      = $db->escape((int)$product['id']);
-          $s_qty     = $db->escape((int)$_POST['quantity']);
+          $quantity     = $db->escape((int)$_POST['quantity']);
+
+$s_qty_diff = 0;
+	if ( $quantity != $sale['qty'] )
+	{
+		// there has been a change in quantity
+		if ( $quantity > $sale['qty'] )
+		{
+		// increase in quantity sold & check for availability in stock
+		// difference between previous quantity and new value
+		$s_qty_diff = $quantity - $sale['qty'];
+			//check for availability in stock
+			if ( (int)$product['quantity'] < $s_qty_diff )
+			{
+				  $session->msg('d',' Insufficient Quantity for Sale!');
+				  redirect('add_sale.php', false);
+			} else {
+			$decrease_quantity_flag = true;
+			}
+		}
+		// decrease - increase in sold stock
+		else if ( $quantity < $sale['qty'] )
+		{
+		// difference between previous quantity and new value
+		$s_qty_diff = $sale['qty'] - $quantity;
+			$decrease_quantity_flag = false;
+		}
+	}
+
           $s_total   = $db->escape($_POST['total']);
           $date      = $db->escape($_POST['date']);
           $s_date    = date("Y-m-d", strtotime($date));
 
           $sql  = "UPDATE sales SET";
-          $sql .= " product_id= '{$p_id}',qty={$s_qty},price='{$s_total}',date='{$s_date}'";
+          $sql .= " order_id= '{$o_id}', product_id= '{$p_id}',qty={$quantity},price='{$s_total}',date='{$s_date}'";
           $sql .= " WHERE id ='{$sale['id']}'";
           $result = $db->query($sql);
-          if( $result && $db->affected_rows() === 1){
-                    update_product_qty($s_qty,$p_id);
+
+          if( $result && $db->affected_rows() === 1)
+          {
+					if ( $s_qty_diff > 0 ) {
+					if ( $decrease_quantity_flag )
+					{
+					decrease_product_qty($s_qty_diff,$p_id);
+					} else {
+					increase_product_qty($s_qty_diff,$p_id);
+					}
+					}
+     
                     $session->msg('s',"Sale updated.");
                     redirect('edit_sale.php?id='.$sale['id'], false);
                   } else {
@@ -44,6 +88,7 @@ if(!$sale){
 
 ?>
 <?php include_once('layouts/header.php'); ?>
+
 <div class="row">
   <div class="col-md-6">
     <?php echo display_msg($msg); ?>
@@ -56,15 +101,21 @@ if(!$sale){
     <div class="panel-heading clearfix">
       <strong>
         <span class="glyphicon glyphicon-th"></span>
+<!--     *************************     -->
         <span>All Sales</span>
+<!--     *************************     -->
      </strong>
      <div class="pull-right">
+<!--     *************************     -->
        <a href="sales.php" class="btn btn-primary">Show all sales</a>
+<!--     *************************     -->
      </div>
     </div>
     <div class="panel-body">
+<!--     *************************     -->
        <table class="table table-bordered">
          <thead>
+          <th> Order # </th>
           <th> Product title </th>
           <th> Qty </th>
           <th> Price </th>
@@ -75,9 +126,17 @@ if(!$sale){
            <tbody  id="product_info">
               <tr>
               <form method="post" action="edit_sale.php?id=<?php echo (int)$sale['id']; ?>">
+
+                <td>
+                  <input type="text" class="form-control" name="order_id" value="<?php echo remove_junk($order['id']); ?>">
+                </td>
+
+
                 <td id="s_name">
                   <input type="text" class="form-control" id="sug_input" name="title" value="<?php echo remove_junk($product['name']); ?>">
+
                   <div id="result" class="list-group"></div>
+
                 </td>
                 <td id="s_qty">
                   <input type="text" class="form-control" name="quantity" value="<?php echo (int)$sale['qty']; ?>">
@@ -98,11 +157,31 @@ if(!$sale){
               </tr>
            </tbody>
        </table>
+<!--     *************************     -->
 
     </div>
   </div>
-  </div>
 
+<?php
+	print "<pre>";
+	print_r($sale);
+	print "</pre>\n";
+?>
+
+      <?php
+	print "<pre>";
+	print_r($product);
+	print "</pre>\n";
+?>
+
+<?php
+	print "<pre>";
+	print_r($order);
+	print "</pre>\n";
+?>
+
+
+  </div>
 </div>
 
 <?php include_once('layouts/footer.php'); ?>

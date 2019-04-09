@@ -3,6 +3,10 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(3);
+
+		  $order_id = last_id('orders');
+		  $o_id = $order_id[id];
+
 ?>
 <?php
 
@@ -12,18 +16,25 @@
         if(empty($errors)){
           $p_id      = $db->escape((int)$_POST['s_id']);
           $s_qty     = $db->escape((int)$_POST['quantity']);
+
+			$product = find_by_id("products", $p_id);
+			if ( (int)$product[quantity] < $s_qty )
+			{	
+                  $session->msg('d',' Insufficient Quantity for Sale!');
+                  redirect('add_sale.php', false);
+			}
           $s_total   = $db->escape($_POST['total']);
           $date      = $db->escape($_POST['date']);
           $s_date    = make_date();
 
           $sql  = "INSERT INTO sales (";
-          $sql .= " product_id,qty,price,date";
+          $sql .= " product_id,order_id,qty,price,date";
           $sql .= ") VALUES (";
-          $sql .= "'{$p_id}','{$s_qty}','{$s_total}','{$s_date}'";
+          $sql .= "'{$p_id}','{$o_id}','{$s_qty}','{$s_total}','{$s_date}'";
           $sql .= ")";
 
                 if($db->query($sql)){
-                  update_product_qty($s_qty,$p_id);
+                  decrease_product_qty($s_qty,$p_id);
                   $session->msg('s',"Sale added. ");
                   redirect('add_sale.php', false);
                 } else {
@@ -53,6 +64,17 @@
         </div>
     </form>
   </div>
+
+  <div class="col-md-6">
+    <div class="panel">
+      <div class="jumbotron text-center">
+<h3>Order #<?php echo $o_id; ?></h3>
+
+      </div>
+    </div>
+</div>
+
+
 </div>
 <div class="row">
 
@@ -61,7 +83,7 @@
       <div class="panel-heading clearfix">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Sale Eidt</span>
+          <span>Sale Edit</span>
        </strong>
       </div>
       <div class="panel-body">

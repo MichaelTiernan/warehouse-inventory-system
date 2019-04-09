@@ -4,15 +4,17 @@
   // Checkin What level user has permission to view this page
    page_require_level(3);
 ?>
-<?php
-$sales = find_all_sale();
-?>
+
+<?php $sales = find_all_sales(); ?>
 <?php include_once('layouts/header.php'); ?>
+
 <div class="row">
   <div class="col-md-6">
     <?php echo display_msg($msg); ?>
   </div>
 </div>
+<!--     *************************     -->
+
   <div class="row">
     <div class="col-md-12">
       <div class="panel panel-default">
@@ -26,10 +28,12 @@ $sales = find_all_sale();
           </div>
         </div>
         <div class="panel-body">
+<!--     *************************     -->
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
                 <th class="text-center" style="width: 50px;">#</th>
+                <th class="text-center" style="width: 15%;">Order</th>
                 <th> Product name </th>
                 <th class="text-center" style="width: 15%;"> Quantity</th>
                 <th class="text-center" style="width: 15%;"> Total </th>
@@ -37,10 +41,14 @@ $sales = find_all_sale();
                 <th class="text-center" style="width: 100px;"> Actions </th>
              </tr>
             </thead>
+<!--     *************************     -->
            <tbody>
+
              <?php foreach ($sales as $sale):?>
+
              <tr>
                <td class="text-center"><?php echo count_id();?></td>
+               <td class="text-center"><?php echo (int)$sale['order_id']; ?></td>
                <td><?php echo remove_junk($sale['name']); ?></td>
                <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
                <td class="text-center"><?php echo remove_junk($sale['price']); ?></td>
@@ -50,17 +58,29 @@ $sales = find_all_sale();
                      <a href="edit_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-edit"></span>
                      </a>
-                     <a href="delete_sale.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
+                     <a href="delete_sale.php?id=<?php echo (int)$sale['id'];?>"  onClick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-trash"></span>
                      </a>
                   </div>
                </td>
              </tr>
+
              <?php endforeach;?>
+
            </tbody>
          </table>
+<!--     *************************     -->
         </div>
       </div>
+
+<?php
+//	print "<pre>";
+//	print_r($sales);
+//	print "</pre>\n";
+
+?>
+
     </div>
   </div>
 <?php include_once('layouts/footer.php'); ?>
+
