@@ -64,6 +64,22 @@ function count_by_id($table){
      return($db->fetch_assoc($result));
   }
 }
+
+/*--------------------------------------------------------------*/
+/* Function for last id  By table name
+/*--------------------------------------------------------------*/
+
+function last_id($table){
+  global $db;
+  if(tableExists($table))
+  {
+    $sql    = "SELECT id FROM ".$db->escape($table) . " ORDER BY id DESC LIMIT 1";
+    $result = $db->query($sql);
+     return($db->fetch_assoc($result));
+  }
+}
+
+
 /*--------------------------------------------------------------*/
 /* Determine if database table exists
 /*--------------------------------------------------------------*/
@@ -161,6 +177,20 @@ function tableExists($table){
 	}
 
   /*--------------------------------------------------------------*/
+  /* Function to log the action of a user
+  /*--------------------------------------------------------------*/
+
+ function logAction($user_id, $remote_ip, $action)
+	{
+		global $db;
+    $date = make_date();
+  $sql  = "INSERT INTO log (user_id,remote_ip,action,date)";
+  $sql .= " VALUES ('{$user_id}','{$remote_ip}','{$action}','{$date}')";
+    $result = $db->query($sql);
+    return ($result && $db->affected_rows() === 1 ? true : false);
+	}
+
+  /*--------------------------------------------------------------*/
   /* Find all Group name
   /*--------------------------------------------------------------*/
   function find_by_groupName($val)
@@ -206,14 +236,14 @@ function tableExists($table){
      }
    /*--------------------------------------------------------------*/
    /* Function for Finding all product name
-   /* JOIN with categorie  and media database table
+   /* JOIN with category  and media database table
    /*--------------------------------------------------------------*/
   function join_product_table(){
      global $db;
-     $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,c.name";
-    $sql  .=" AS categorie,m.file_name AS image";
+     $sql  =" SELECT p.id,p.name,p.location,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,c.name";
+    $sql  .=" AS category,m.file_name AS image";
     $sql  .=" FROM products p";
-    $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+    $sql  .=" LEFT JOIN categories c ON c.id = p.category_id";
     $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
     $sql  .=" ORDER BY p.id ASC";
     return find_by_sql($sql);
@@ -245,9 +275,42 @@ function tableExists($table){
   }
 
   /*--------------------------------------------------------------*/
-  /* Function for Update product quantity
+  /* Function for Finding all product by category
   /*--------------------------------------------------------------*/
-  function update_product_qty($qty,$p_id){
+
+   function find_products_by_category($cat){
+     global $db;
+     $sql  =" SELECT p.id,p.name,p.location,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,c.name";
+    $sql  .=" AS category,m.file_name AS image";
+    $sql  .=" FROM products p";
+    $sql  .=" LEFT JOIN categories c ON c.id = p.category_id";
+    $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+    $sql  .=" WHERE c.id = '{$cat}'";
+    $sql  .=" ORDER BY p.id ASC";
+    return find_by_sql($sql);
+   }
+
+
+
+
+
+  /*--------------------------------------------------------------*/
+  /* Function for Increase product quantity
+  /*--------------------------------------------------------------*/
+  function increase_product_qty($qty,$p_id){
+    global $db;
+    $qty = (int) $qty;
+    $id  = (int)$p_id;
+    $sql = "UPDATE products SET quantity=quantity +'{$qty}' WHERE id = '{$id}'";
+    $result = $db->query($sql);
+    return($db->affected_rows() === 1 ? true : false);
+
+  }
+
+  /*--------------------------------------------------------------*/
+  /* Function for Decrease product quantity
+  /*--------------------------------------------------------------*/
+  function decrease_product_qty($qty,$p_id){
     global $db;
     $qty = (int) $qty;
     $id  = (int)$p_id;
@@ -256,14 +319,15 @@ function tableExists($table){
     return($db->affected_rows() === 1 ? true : false);
 
   }
+
   /*--------------------------------------------------------------*/
   /* Function for Display Recent product Added
   /*--------------------------------------------------------------*/
  function find_recent_product_added($limit){
    global $db;
-   $sql   = " SELECT p.id,p.name,p.sale_price,p.media_id,c.name AS categorie,";
+   $sql   = " SELECT p.id,p.name,p.sale_price,p.media_id,c.name AS category,";
    $sql  .= "m.file_name AS image FROM products p";
-   $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
+   $sql  .= " LEFT JOIN categories c ON c.id = p.category_id";
    $sql  .= " LEFT JOIN media m ON m.id = p.media_id";
    $sql  .= " ORDER BY p.id DESC LIMIT ".$db->escape((int)$limit);
    return find_by_sql($sql);
@@ -283,14 +347,45 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
  /* Function for find all sales
  /*--------------------------------------------------------------*/
- function find_all_sale(){
+ function find_all_sales(){
    global $db;
-   $sql  = "SELECT s.id,s.qty,s.price,s.date,p.name";
+   $sql  = "SELECT s.id,s.order_id,s.qty,s.price,s.date,p.name";
    $sql .= " FROM sales s";
+   $sql .= " LEFT JOIN orders o ON s.order_id = o.id";
    $sql .= " LEFT JOIN products p ON s.product_id = p.id";
    $sql .= " ORDER BY s.date DESC";
    return find_by_sql($sql);
  }
+
+ /*--------------------------------------------------------------*/
+ /* Function for find all orders
+ /*--------------------------------------------------------------*/
+ function find_all_orders(){
+   global $db;
+   $sql  = "SELECT o.id,o.sales_id,o.date";
+   $sql .= " FROM orders o";
+   $sql .= " LEFT JOIN sales s ON s.id = o.sales_id";
+   $sql .= " ORDER BY o.date DESC";
+   return find_by_sql($sql);
+ }
+
+ /*--------------------------------------------------------------*/
+ /* Function for find sales by order_id
+ /*--------------------------------------------------------------*/
+ function find_sales_by_order_id($id) {
+   global $db;
+   $sql  = "SELECT s.id,s.qty,s.price,s.date,p.name";
+   $sql .= " FROM sales s";
+   $sql .= " LEFT JOIN orders o ON s.order_id = o.id";
+   $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+   $sql .= " WHERE s.order_id = " . $db->escape((int)$id);
+   $sql .= " ORDER BY s.date DESC";
+   return find_by_sql($sql);
+ }
+
+
+
+
  /*--------------------------------------------------------------*/
  /* Function for Display Recent sale
  /*--------------------------------------------------------------*/
