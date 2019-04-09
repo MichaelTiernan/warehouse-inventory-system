@@ -1,5 +1,6 @@
 ## Oswa - inv
 - - - -
+https://hydromazing.com/2019/02/07/using-a-raspberry-pi-for-your-own-inventory-management-system/
 Modified by Cory J. Potter aka CoreConduit Consulting Services 2018 - 2019
 cory@coreconduit.com
 - - - -
