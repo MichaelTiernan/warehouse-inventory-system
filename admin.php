@@ -15,16 +15,20 @@
 ?>
 <?php include_once('layouts/header.php'); ?>
 
+<!--     *************************     -->
 <div class="row">
    <div class="col-md-6">
      <?php echo display_msg($msg); ?>
    </div>
 </div>
+<!--     *************************     -->
   <div class="row">
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-green">
+
           <i class="glyphicon glyphicon-user"></i>
+
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top"> <?php  echo $c_user['total']; ?> </h2>
@@ -32,10 +36,13 @@
         </div>
        </div>
     </div>
+<!--     *************************     -->
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-red">
+
           <i class="glyphicon glyphicon-list"></i>
+
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top"> <?php  echo $c_categorie['total']; ?> </h2>
@@ -43,10 +50,13 @@
         </div>
        </div>
     </div>
+<!--     *************************     -->
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-blue">
+
           <i class="glyphicon glyphicon-shopping-cart"></i>
+
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top"> <?php  echo $c_product['total']; ?> </h2>
@@ -54,10 +64,13 @@
         </div>
        </div>
     </div>
+<!--     *************************     -->
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-yellow">
+
           <i class="glyphicon glyphicon-usd"></i>
+
         </div>
         <div class="panel-value pull-right">
           <h2 class="margin-top"> <?php  echo $c_sale['total']; ?></h2>
@@ -65,30 +78,50 @@
         </div>
        </div>
     </div>
+<!--     *************************     -->
 </div>
-  <div class="row">
+
+<script>
+function closePanel()
+{
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none")
+  {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+</script>
+
+  <div class="row" id="myDIV">
    <div class="col-md-12">
       <div class="panel">
-        <div class="jumbotron text-center">
-           <h1>Thank You! for your support and love.</h1>
-           <p> <strong>OSWA-INV v2</strong> way more better then <strong> v1 </strong>.
-           </br>If you have a question regarding the usage of this applications, please ask on <a href="https://www.facebook.com/oswapp" title="Facebook" target="_blank">Facebook</a> OSWA Fan page.</p>
-
+        <div class="pull-right">
+		<a href="#" onclick="closePanel();" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Close"><i class="glyphicon glyphicon-remove"></i></a>
         </div>
+
+        <div class="jumbotron text-center">
+           <h3>Welcome!</h3>Contact support for additional assistance.
+        </div>
+
       </div>
    </div>
   </div>
+<!--     *************************     -->
   <div class="row">
    <div class="col-md-4">
      <div class="panel panel-default">
        <div class="panel-heading">
          <strong>
            <span class="glyphicon glyphicon-th"></span>
-           <span>Highest Saleing Products</span>
+           <span>Highest Selling Products</span>
          </strong>
        </div>
+
        <div class="panel-body">
          <table class="table table-striped table-bordered table-condensed">
+
           <thead>
            <tr>
              <th>Title</th>
@@ -96,19 +129,27 @@
              <th>Total Quantity</th>
            <tr>
           </thead>
+
+
           <tbody>
+
             <?php foreach ($products_sold as  $product_sold): ?>
+
               <tr>
                 <td><?php echo remove_junk(first_character($product_sold['name'])); ?></td>
                 <td><?php echo (int)$product_sold['totalSold']; ?></td>
                 <td><?php echo (int)$product_sold['totalQty']; ?></td>
               </tr>
+
             <?php endforeach; ?>
+
+
           <tbody>
          </table>
        </div>
      </div>
    </div>
+<!--     *************************     -->
    <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -128,6 +169,8 @@
          </tr>
        </thead>
        <tbody>
+
+
          <?php foreach ($recent_sales as  $recent_sale): ?>
          <tr>
            <td class="text-center"><?php echo count_id();?></td>
@@ -141,11 +184,15 @@
         </tr>
 
        <?php endforeach; ?>
+
+
        </tbody>
      </table>
     </div>
    </div>
   </div>
+<!--     *************************     -->
+
   <div class="col-md-4">
     <div class="panel panel-default">
       <div class="panel-heading">
@@ -157,6 +204,8 @@
       <div class="panel-body">
 
         <div class="list-group">
+
+
       <?php foreach ($recent_products as  $recent_product): ?>
             <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo    (int)$recent_product['id'];?>">
                 <h4 class="list-group-item-heading">
@@ -171,10 +220,13 @@
                   </span>
                 </h4>
                 <span class="list-group-item-text pull-right">
-                <?php echo remove_junk(first_character($recent_product['categorie'])); ?>
+                <?php echo remove_junk(first_character($recent_product['category'])); ?>
               </span>
           </a>
+
       <?php endforeach; ?>
+
+
     </div>
   </div>
  </div>
