@@ -16,7 +16,13 @@
    </ul>
   </li>
   <li>
-    <a href="categorie.php" >
+    <a href="media.php" >
+      <i class="glyphicon glyphicon-picture"></i>
+      <span>Media</span>
+    </a>
+  </li>
+  <li>
+    <a href="categories.php" >
       <i class="glyphicon glyphicon-indent-left"></i>
       <span>Categories</span>
     </a>
@@ -27,14 +33,14 @@
       <span>Products</span>
     </a>
     <ul class="nav submenu">
-       <li><a href="product.php">Manage products</a> </li>
+       <li><a href="products.php">Manage products</a> </li>
        <li><a href="add_product.php">Add product</a> </li>
    </ul>
   </li>
   <li>
-    <a href="media.php" >
-      <i class="glyphicon glyphicon-picture"></i>
-      <span>Meadias</span>
+    <a href="stock.php" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-large"></i>
+      <span>Stock</span>
     </a>
   </li>
   <li>
@@ -43,6 +49,8 @@
        <span>Sales</span>
       </a>
       <ul class="nav submenu">
+         <li><a href="orders.php">Manage Orders</a> </li>
+         <li><a href="add_order.php">Add Order</a> </li>
          <li><a href="sales.php">Manage Sales</a> </li>
          <li><a href="add_sale.php">Add Sale</a> </li>
      </ul>
