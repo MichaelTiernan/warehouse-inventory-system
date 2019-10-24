@@ -47,22 +47,18 @@
 <!--     *************************     -->
               <?php foreach ($all_stock as $stock):?>
                 <tr>
-
                     <td class="text-center">
 					<a href="view_product.php?id=<?php echo (int)$stock['product_id'];?>">
 					<?php
-
-					foreach ( $all_products as $product )
-					{
-					if ( $stock['product_id'] == $product['id'] ) { echo $product['name']; }
-					}
-										  
+            $product = find_by_id("products", (int)$stock['product_id']);
+            echo $product["name"] ;							  
 					?>
+
 					</a>	
 					</td>
                     
                     <td class="text-center">
-						<?php echo remove_junk(ucfirst($stock['quantity']));?>
+						<?php echo remove_junk(ucfirst($product['quantity']));?>
 					</td>
 
 
