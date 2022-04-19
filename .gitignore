@@ -1,0 +1,18 @@
+# My usual, keeps my changes from ending up in the repo.
+.gitignore
+
+# Keep from including these automatically things ...
+*.tmp
+*.out
+*.log
+
+# Keep from including files we want blocked ...
+*.ignore
+
+# OS Flotsam
+*/.DS_Store
+
+# Chaff left by some programs that should be ignored.
+*~
+
+###>= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
