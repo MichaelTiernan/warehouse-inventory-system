@@ -1,7 +1,10 @@
 # My usual, keeps my changes from ending up in the repo.
+# This way, if someone who's checked out repo makes changes for their
+# own purposes, they don't end up back into the mainstream by accident.
+# The inclusion of changes requires a 'force' flag on this file.
 .gitignore
 
-# Keep from including these automatically things ...
+# Keep from including these things automatically ...
 *.tmp
 *.out
 *.log
@@ -9,10 +12,10 @@
 # Keep from including files we want blocked ...
 *.ignore
 
-# OS Flotsam
-*/.DS_Store
-
 # Chaff left by some programs that should be ignored.
 *~
+
+# OS Flotsam there's others but this is a good start.
+*/.DS_Store
 
 ###>= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
